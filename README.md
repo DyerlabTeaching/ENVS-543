@@ -45,14 +45,12 @@ This course is designed as a sequence of individual, stand-alone modules.  Each 
 Deliverable       | Details                                  | SLO  
 ------------------|------------------------------------------|-----------
 Welcome & Logistics | Setting up the logistics for the class, getting R, RStudio, and Quarto installed on each of your machines, and getting a tour of the IDE.  |  NA
-Git & Github | Establish a functional working knowledge of git as a collaborative tool for reproducible research | 2
-Markdown | Learn to use markdown to mix data, analyses, output, graphics, and research narratives | 2
-Data Types | Understanding the fundamental data types within R and how to import, work with easily, and export raw data | 1,2 
-Data Containers | Creation, import, and export of `vectors`, `matrices`, `data.tables`, and `lists` for reliable data representation | 1,2
+Git, Github, & Markdown | Establish a functional working knowledge of git as a collaborative tool for reproducible research and begin working with Markdown as an output for data analysis. | 2
+Data Types & Containers | Understanding the fundamental data types and containers within R and how to import, work with easily, and export raw data. | 1,2 
 Tidyverse | Data manipulation.  Like a boss. | 1, 2
-AI in Data Analytics | Integrate Artificial Intelligence in the development of code and text.  | 2
 Graphics that DON’T suck | Hello publication quality graphics, using the grammar of graphics approach | 2,3
-Confidence on a Mean | Base understanding of statistical inferences and the properties of sampled data | 1,2,4
+AI in Data Analytics | Integrate Artificial Intelligence in the development of code and text.  | 2
+Statistical Confidence | Base understanding of statistical inferences and the properties of sampled data | 1,2,4
 Binomial Inferences | Analyses based upon expectations.  | 4
 Categorical~f(Categorical) | Contingency table and categorical count data | 4
 Continuous~f(Categorical) | Analysis of Variance (or equality of means) | 4
@@ -60,8 +58,7 @@ Continuous~f(Continuous) | Correlation & Regression approaches | 4
 Categorical~f(Continuous) | Logistic regression | 4
 Points, Lines, & Polygons | Spatial data as vectors | 3,5 
 Raster Data | Continuously distributed spatial data | 3,5
-Cartography | Creating usable and understandable maps and symbolic representation of spatial data | 3,4
-Census Data | Human data based upon the US census. | 3,4,5
+Spatial Analyses | Perform statistical analyses based on spatial location and contexts. | 3,4
 Raytracing | Higher dimensional visualization of spatial extents.  | 3,5
 
 ## Logistics
