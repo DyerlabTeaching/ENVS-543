@@ -47,3 +47,8 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+
+# Rodney's Customizations
+.DS_Store
+
