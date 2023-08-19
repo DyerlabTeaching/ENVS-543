@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="DataAnimation.gif">
+  <img src="media/DataAnimation.gif">
 </p>
 
 # ENVS 543: Environmental Data Literacy Fall 2023
 
 > Semester course; 3 lecture hours. 3 credits. Enrollment is restricted to students with graduate standing or those with one course in statistics and permission of instructor. Develop quantitative skills for the visualization, manipulation, analysis, and communication of environmental "big data." This course focuses on spatial environmental data analysis, interpretation, and communication, using real-time data from the Rice Rivers Center and the R statistical analysis environment.
 
-<img align="right" src="dyer.png"> Hello.  My name is Dr. Rodney Dyer and this is a course I've developed to serve as the entry course for incoming Environmental Studies graduate students and advanced undergraduates.  
+<img align="right" src="media/dyer.png"> Hello.  My name is Dr. Rodney Dyer and this is a course I've developed to serve as the entry course for incoming Environmental Studies graduate students and advanced undergraduates.  
 
 The rationale for this class is as follows.  
 
@@ -23,7 +23,7 @@ To understand data analytics, one needs to recognize the entire workflow.  Below
 - **Communicate:** The effort we put into research and analyses is meaningless without effective communication of your data and findings to a broad audience.  Here we will focus on how to develop effective data communication strategies and formats.
 
 <p align="center">
-  <img src="workflow.png">
+  <img src="media/workflow.png">
 </p>
 
 ## Learning Objectives
@@ -44,14 +44,14 @@ This course is designed as a sequence of individual, stand-alone modules.  Each 
 
 Deliverable       | Details                                  | SLO  
 ------------------|------------------------------------------|-----------
-Welcome & Logistics  | Setting up the computational environment for the class.  |  NA
-Git, Github & Markdown | Establish a functional working knowledge of git, github, and begin learning Markdown | 2
-Data Types & Containers | Understanding the fundamental grammar and objects in R. | 1,2 
+Welcome & Logistics | Setting up the logistics for the class, getting R, RStudio, and Quarto installed on each of your machines, and getting a tour of the IDE.  |  NA
+Git, Github, & Markdown | Establish a functional working knowledge of git as a collaborative tool for reproducible research and begin working with Markdown as an output for data analysis. | 2
+Data Types & Containers | Understanding the fundamental data types and containers within R and how to import, work with easily, and export raw data. | 1,2 
 Tidyverse | Data manipulation.  Like a boss. | 1, 2
 Graphics that DON’T suck | Hello publication quality graphics, using the grammar of graphics approach | 2,3
-AI & Data Analytics | Leveraging large language models to aid in scientific communication | 1,2,3,4
+AI in Data Analytics | Integrate Artificial Intelligence in the development of code and text.  | 2
 Statistical Confidence | Base understanding of statistical inferences and the properties of sampled data | 1,2,4
-Binomial Inferences | Analyses based upon counts and expectations.  | 4
+Binomial Inferences | Analyses based upon expectations.  | 4
 Categorical~f(Categorical) | Contingency table and categorical count data | 4
 Continuous~f(Categorical) | Analysis of Variance (or equality of means) | 4
 Continuous~f(Continuous) | Correlation & Regression approaches | 4
