@@ -52,3 +52,5 @@ rsconnect/
 # Rodney's Customizations
 .DS_Store
 
+
+/.quarto/
