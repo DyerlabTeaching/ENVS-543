@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>readme</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="README_files/libs/clipboard/clipboard.min.js"></script>
+<script src="README_files/libs/quarto-html/quarto.js"></script>
+<script src="README_files/libs/quarto-html/popper.min.js"></script>
+<script src="README_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="README_files/libs/quarto-html/anchor.min.js"></script>
+<link href="README_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="README_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="README_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="README_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="README_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<p align="center">
+<img src="media/DataAnimation.gif">
+</p>
+<section id="envs-543-environmental-data-literacy-fall-2023" class="level1">
+<h1>ENVS 543: Environmental Data Literacy Fall 2023</h1>
+<blockquote class="blockquote">
+<p>Semester course; 3 lecture hours. 3 credits. Enrollment is restricted to students with graduate standing or those with one course in statistics and permission of instructor. Develop quantitative skills for the visualization, manipulation, analysis, and communication of environmental “big data.” This course focuses on spatial environmental data analysis, interpretation, and communication, using real-time data from the Rice Rivers Center and the R statistical analysis environment.</p>
+</blockquote>
+<p><img align="right" src="media/dyer.png"> Hello. My name is Dr.&nbsp;Rodney Dyer and this is a course I’ve developed to serve as the entry course for incoming Environmental Studies graduate students and advanced undergraduates.</p>
+<p>The rationale for this class is as follows.</p>
+<p>As both a student and instructor in statistics classes, I found I spent a vast amount of time and effort describing the characteristics of statistics (derivations, expectations, etc.). This is perfectly fine, it is important on many levels to make sure that practitioners understand the basis and context of all the kinds of analyses they use. However, the drawback here, in my experience, is that once you’ve spent a semester or year getting all this knowledge under your belt, and one can easily demonstrate their understanding of the parameters in a model, they cannot actually work with real data. This class is designed to produce practitioners of data analysis.</p>
+<section id="workflow-in-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="workflow-in-data-analysis">Workflow in Data Analysis</h2>
+<p>To understand data analytics, one needs to recognize the entire workflow. Below is a brief graphical depiction of how analysis actually works—in the real world. In this class, we will work on all of these components using the open-source R language.</p>
+<ul>
+<li><strong>Collect:</strong> Getting data from an external source into a format that you can use is often the most time-consuming step in the analysis. The content of this class will provide training in data import from local, online, and database sources.<br>
+</li>
+<li><strong>Visualize:</strong> Visualizing data is key to understanding. In the image below, notice that the variables X and Y in all the displayed data sets have equivalent means, standard deviations, and correlation up to 2 decimal places! We will emphasize visualization, both static and dynamic, throughout this class.</li>
+<li><strong>Transform:</strong> Pulling data into your analysis ecosystem is not sufficient. Often the data need to be reformatted and reconfigured before it is actually usable.</li>
+<li><strong>Model:</strong> The application of models to subsets of data is often the step that takes the least amount of time and effort. However, the application of a model to data is not the endpoint. The model must be visualized and, many times, the underlying data or derivate data must be transformed and submitted to subsequent models.</li>
+<li><strong>Communicate:</strong> The effort we put into research and analyses is meaningless without effective communication of your data and findings to a broad audience. Here we will focus on how to develop effective data communication strategies and formats.</li>
+</ul>
+<p align="center">
+<img src="media/workflow.png">
+</p>
+</section>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<p>The purpose of this course is to help you build your data skills and to develop a foundational understanding upon which subsequent courses will build. The overarching goal here is to develop a working knowledge of the R statistical computing language and enough proficiency to import raw data and then iterate through the visualization, manipulation, and analysis steps in the creation of output that is easily communicated to a scientific audience.</p>
+<p>The content of this course is built upon the following general student learning objectives (SLO):</p>
+<ul>
+<li>SLO 1: Identity, manipulate, and summarize numerical, categorical, ordinal, logical, date, string, and spatial data types.</li>
+<li>SLO 2: Create habits and took the knowledge to support reproducible research.<br>
+</li>
+<li>SLO 3: Create an informative and effective graphical display of various data types of suitable quality for inclusion in published manuscripts.</li>
+<li>SLO 4: Effectively choose appropriate statistical models based on the types of data at hand and the questions being addressed.</li>
+<li>SLO 5: Demonstrate a general understanding of spatial data types and the creation of both appropriate static and dynamic maps.</li>
+</ul>
+</section>
+<section id="course-content-assessment" class="level2">
+<h2 class="anchored" data-anchor-id="course-content-assessment">Course Content &amp; Assessment</h2>
+<p>This course is designed as a sequence of individual, stand-alone modules. Each is self-contained and includes a lecture, slides, a larger narrative document, a video demonstration, and an assessment.</p>
+<table class="table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 59%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Deliverable</th>
+<th>Details</th>
+<th>SLO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Welcome &amp; Logistics</td>
+<td>Setting up the logistics for the class, getting R, RStudio, and Quarto installed on each of your machines, and getting a tour of the IDE.</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>Git, Github, &amp; Markdown</td>
+<td>Establish a functional working knowledge of git as a collaborative tool for reproducible research and begin working with Markdown as an output for data analysis.</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Data Types &amp; Containers</td>
+<td>Understanding the fundamental data types and containers within R and how to import, work with easily, and export raw data.</td>
+<td>1,2</td>
+</tr>
+<tr class="even">
+<td>Tidyverse</td>
+<td>Data manipulation. Like a boss.</td>
+<td>1, 2</td>
+</tr>
+<tr class="odd">
+<td>Graphics that DON’T suck</td>
+<td>Hello publication quality graphics, using the grammar of graphics approach</td>
+<td>2,3</td>
+</tr>
+<tr class="even">
+<td>AI in Data Analytics</td>
+<td>Integrate Artificial Intelligence in the development of code and text.</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>Statistical Confidence</td>
+<td>Base understanding of statistical inferences and the properties of sampled data</td>
+<td>1,2,4</td>
+</tr>
+<tr class="even">
+<td>Binomial Inferences</td>
+<td>Analyses based upon expectations.</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Categorical~f(Categorical)</td>
+<td>Contingency table and categorical count data</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Continuous~f(Categorical)</td>
+<td>Analysis of Variance (or equality of means)</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Continuous~f(Continuous)</td>
+<td>Correlation &amp; Regression approaches</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Categorical~f(Continuous)</td>
+<td>Logistic regression</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Points, Lines, &amp; Polygons</td>
+<td>Spatial data in vector format vectors</td>
+<td>3,5</td>
+</tr>
+<tr class="even">
+<td>Raster Data</td>
+<td>Continuously distributed spatial data</td>
+<td>3,5</td>
+</tr>
+<tr class="odd">
+<td>Spatial Analyses</td>
+<td>Performing spatially explicit analyses of point process and habitat.</td>
+<td>3,4</td>
+</tr>
+<tr class="even">
+<td>Raytracing</td>
+<td>Higher dimensional visualization of spatial extents.</td>
+<td>3,5</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="logistics" class="level2">
+<h2 class="anchored" data-anchor-id="logistics">Logistics</h2>
+<ul>
+<li>Course Instructor: Professor Rodney Dyer</li>
+<li>Email: <a href="mailto://rjdyer@vcu.edu">rjdyer@vcu.edu</a></li>
+<li>Webpage: <a href="https://dyerlab.org">dyerlab.org</a>.</li>
+<li>Office Hours: Online each Tuesday &amp; Thursday from 10-11 am via <a href="https://us02web.zoom.us/j/87009569216?pwd=UVhZMnFUaDdseFFvY2ZnMEloYm9qdz09">zoom</a> or by appointment. I will be on the Zoom session each day.</li>
+<li>Meeting Times: T/R 12:30 - 13:45</li>
+<li>Meeting Location: LFSCB 250</li>
+<li>Final Exam Scheduled: Tuesday, December 12, 2023, from 12:30 – 15:20.</li>
+</ul>
+</section>
+<section id="required-materials" class="level2">
+<h2 class="anchored" data-anchor-id="required-materials">Required Materials</h2>
+<p>This course requires that you bring your own laptop or other computing device that is capable of running RStudio and the R statistical language. There is no required book and all content is provided via online resources.</p>
+</section>
+<section id="assignments-grading-policy" class="level2">
+<h2 class="anchored" data-anchor-id="assignments-grading-policy">Assignments &amp; Grading Policy</h2>
+<p>The grade for this course is based upon the totality of the points gained for all assignments as well as a single large data analysis project that will be due at the end of the semester. This final will account for 10% of your overall grade. Grades will be determined using the normal 10% scale: - A (&gt;= 90%),<br>
+- B (&gt;= 80% &amp; &lt; 90%),<br>
+- C (&gt;= 70% &amp; &lt; 80%), - D (&gt;= 60% &amp; &lt; 70%), and - F (&lt; 60%).</p>
+<p>All percentages are concrete and scores will be rounded to the nearest integer and no extra credit will be given.</p>
+</section>
+<section id="late-policy" class="level2">
+<h2 class="anchored" data-anchor-id="late-policy">Late Policy</h2>
+<p>All of the content in this class is given as take-home assignments and tests. You will have a full 7 days to complete and turn in the work. The intention here is to give you more than sufficient time to complete the work because we do not rush data analysis. On the due date, I post the answers so you can check your work. After the answers are posted, there will be no points awarded for late work.</p>
+</section>
+<section id="attendance-policy" class="level2">
+<h2 class="anchored" data-anchor-id="attendance-policy">Attendance Policy</h2>
+<p>All content is provided as slides, handouts, and video content. Much of the work in this class will be conducted during the in-class session. As such, you must show up to class if you intend to get the content. Data analysis is a hands-on experience and the more doing it you engage in, the more efficient you will become.</p>
+</section>
+<section id="disclaimer" class="level2">
+<h2 class="anchored" data-anchor-id="disclaimer">Disclaimer</h2>
+<p>Note that the specifics of this Course Syllabus may be changed at any time during the semester. You will be responsible for abiding by any such changes that are communicated to you via email, course announcement, and/or posting in the course discussion forums.</p>
+</section>
+<section id="vcu-policies" class="level2">
+<h2 class="anchored" data-anchor-id="vcu-policies">VCU Policies</h2>
+<p>Students should visit http://go.vcu.edu/syllabus and review all syllabus statement information. The full university syllabus statement includes information on safety, registration, the VCU Honor Code, student conduct, withdrawal, and more.</p>
+<p>Use <a href="https://www.library.vcu.edu">VCU Libraries</a> to find and access library resources, spaces, technology and services that support and enhance all learning opportunities at the university.</p>
+</section>
+<section id="health-and-safety" class="level2">
+<h2 class="anchored" data-anchor-id="health-and-safety">Health and safety</h2>
+<section id="public-health-information" class="level3">
+<h3 class="anchored" data-anchor-id="public-health-information">Public health information</h3>
+<p>Health advisories, including information about COVID-19 testing, vaccination, supplies and other public health measures, can be found at <a href="https://srm.vcu.edu/health-advisories/">the Safety and Risk Management website</a>. Visit this site to stay informed about recommendations for VCU and surrounding communities. Additional links to health, wellness and safety information are on the <a href="https://www.vcu.edu/life-at-vcu/health-wellness-safety/">Life at VCU webpage</a>.</p>
+</section>
+<section id="campus-emergency-information" class="level3">
+<h3 class="anchored" data-anchor-id="campus-emergency-information">Campus emergency information</h3>
+<p><a href="https://alert.vcu.edu/signup/">Sign up to receive at VCU Alerts</a>. It is essential to keep your information up-to-date within VCU Alert and to keep your permanent address and emergency contact information current in <a href="https://bansso.vcu.edu/ssomanager/c/SSB">eServices</a>. VCU uses a variety of communication methods to alert the campus community about emergency situations and safety threats. Learn more about <a href="https://alert.vcu.edu/know/types-of-alerts/">types of alerts</a> online. Know the emergency phone number for the VCU Police (828-1234), and report suspicious activities and objects.</p>
+</section>
+<section id="managing-stress" class="level3">
+<h3 class="anchored" data-anchor-id="managing-stress">Managing stress</h3>
+<p>Students may experience situations or challenges that can interfere with learning and interpersonal functioning including stress, anxiety, depression, alcohol and/or other drug use, concern for a friend or family member, loss, sleep difficulties, feeling hopeless or relationship problems. There are numerous campus resources available to students including <a href="https://counseling.vcu.edu/">University Counseling Services</a> (804-828-6200 MPC Campus, 804-828-3964 MCV Campus) which provides brief therapy treatment, <a href="https://health.students.vcu.edu/">University Student Health Services</a> (MPC 804 828-8828, MCV Campus 804 828-9220) and the <a href="https://recwell.vcu.edu/">Department of Recreation &amp; Well-Being (RecWell)</a> (804-828-9355). 24 hour emergency mental health support is available by calling (804) 828-6200 or utilizing the <a href="https://988lifeline.org/?utm_source=google&amp;utm_medium=web&amp;utm_campaign=onebox">National Suicide Prevention Lifeline</a> (dial 988).</p>
+</section>
+<section id="mandatory-responsibility-of-faculty-members-to-report-incidents-of-sexual-misconduct" class="level3">
+<h3 class="anchored" data-anchor-id="mandatory-responsibility-of-faculty-members-to-report-incidents-of-sexual-misconduct">Mandatory responsibility of faculty members to report incidents of sexual misconduct</h3>
+<p>All VCU faculty members are Responsible Employees as defined by University policy. Responsible employees have a duty to report alleged policy violations to the Title IX Coordinator. This includes incidents of sexual harassment, sexual assault, dating &amp; domestic violence, stalking, sexual exploitation, and related retaliation. Responsible employees may report information through this form or by emailing <a href="mailto:titleix@vcu.edu">titleix@vcu.edu</a>. For confidential support, contact <a href="https://counseling.vcu.edu/">University Counseling Services</a>, (804-828-6200 for MP Campus/804-828-3964 for MCV Campus) For more information, visit <a href="http://equity.vcu.edu/title-ix/">our Title IX webpage</a>.</p>
+</section>
+<section id="reading-days" class="level3">
+<h3 class="anchored" data-anchor-id="reading-days">Reading Days</h3>
+<p>No classes or exams are held on Reading Day (Friday, Oct.&nbsp;21, 2022) except in instances where a student is involved in clinical and field placements, practica, co-ops, internships, and other work-related experiential learning activities. Faculty may not give an examination or an assignment on those days. Instead, students are encouraged to use these days for relaxation, study, and/or review of class materials.</p>
+</section>
+</section>
+<section id="academic-success-and-integrity" class="level2">
+<h2 class="anchored" data-anchor-id="academic-success-and-integrity">Academic Success and Integrity</h2>
+<section id="honor-system-upholding-academic-integrity" class="level3">
+<h3 class="anchored" data-anchor-id="honor-system-upholding-academic-integrity">Honor System: upholding academic integrity</h3>
+<p>The VCU Honor System policy describes the responsibilities of students, faculty and administration in upholding academic integrity. According to this policy, “Members of the academic community are required to conduct themselves in accordance with the highest standards of academic honesty, ethics, and integrity at all times.” <a href="https://conduct.students.vcu.edu/vcu-honor-system/">Students are expected to read the policy in full and learn about requirements</a>.</p>
+</section>
+<section id="early-academic-alerts" class="level3">
+<h3 class="anchored" data-anchor-id="early-academic-alerts">Early academic alerts</h3>
+<p>VCU’s <a href="https://semss.vcu.edu/for-faculty-and-staff/early-notification-programs/#:~:text=VCU's%20Early%20Notification%20Programs%20help,students%20early%20in%20the%20semester.">Early Notification Program</a> supports student success. If as an instructor I am concerned about your academic engagement or performance in the first few weeks of class, you may receive a Progress Report email encouraging you to reach out to me after class or during student hours (office hours) for additional support. As a community of care, your <a href="https://uaa.vcu.edu/services/appointments/">academic advisor</a>, the <a href="https://writing.vcu.edu/">Writing Center</a>, and the <a href="https://clc.vcu.edu/">Campus Learning Center</a> may also follow up to provide additional layers of support.</p>
+</section>
+<section id="students-with-disabilities" class="level3">
+<h3 class="anchored" data-anchor-id="students-with-disabilities">Students with disabilities</h3>
+<p>VCU is committed to ensuring that all students maintain equal access to all aspects of the university, including educational experiences through the provision of reasonable accommodations and academic adjustments. In addition to being a requirement under Section 504 of the Rehabilitation Act of 1973 and the Americans with Disabilities Act, this speaks directly to VCU’s mission of inclusion, equity, and access. To receive accommodations or other disability-related supports, students must register with the Office of Student Accessibility and Educational Opportunity on the Monroe Park Campus (828-2253) or the Division for Academic Success on the MCV campus (828-9782). Students and faculty can visit the <a href="https://saeo.vcu.edu/">Student Accessibility and Educational Opportunity website</a> and/or the <a href="https://das.vcu.edu/">Division for Academic Success website</a> for additional information. Once students have completed the registration process, they will be provided with a letter of accommodation. They should provide a copy to their instructor(s) and attempt to schedule a meeting to discuss the implementation of accommodations as early in the semester as possible.</p>
+</section>
+<section id="career-services" class="level3">
+<h3 class="anchored" data-anchor-id="career-services">Career Services</h3>
+<p>Looking for ways to tie what you are learning in your class to your future career or professional goals? <a href="http://www.careers.vcu.edu/">VCU Career Services</a> provides career planning services for all current VCU students and alumni. Career Services can help students with finding a work-study job on/off campus, resume writing, internship development, interviewing, preparing for graduate school, networking, or job searching. Students are invited to attend career events and workshops and schedule individualized career advising appointments.</p>
+</section>
+</section>
+<section id="registration-attendance-and-financial-responsibilities" class="level2">
+<h2 class="anchored" data-anchor-id="registration-attendance-and-financial-responsibilities">Registration, Attendance, and Financial Responsibilities</h2>
+<section id="class-registration-is-required-for-attendance" class="level3">
+<h3 class="anchored" data-anchor-id="class-registration-is-required-for-attendance">Class registration is required for attendance</h3>
+<p>Students may attend only those classes for which they have registered. Faculty may not add students to class rosters. If students are attending a class for which they have not registered, they must stop attending.</p>
+</section>
+<section id="attendance-and-consequences-of-poor-attendance" class="level3">
+<h3 class="anchored" data-anchor-id="attendance-and-consequences-of-poor-attendance">Attendance and consequences of poor attendance</h3>
+<p>The instructional programs at VCU are based upon a series of class meetings involving lectures, discussions, field experiences, special readings, and reporting assignments. Therefore it is important for each student to be in attendance on a regular basis. A student who misses a class session is responsible for completing all material covered or assignments made during the absence.</p>
+<ul>
+<li><p>Students having attendance problems should contact their instructor to explain the reasons for nonattendance and to discuss the feasibility of continuing in the course. If the student has fallen so far behind that the successful completion of the course is impossible, the student should withdraw from the course before the end of the first 10 weeks of classes (by Oct.&nbsp;28, 2022).</p></li>
+<li><p>If the student continues to miss class and does not officially withdraw from the course, the instructor may withdraw the student for nonattendance with a mark of “W’’ before the end of the first 10 weeks of classes or may assign an academic grade at the end. Withdrawals are not permitted after the end of the first 10 weeks of classes. For classes that do not conform to the semester calendar, the final withdrawal date occurs when half of the course has been completed.</p></li>
+</ul>
+</section>
+<section id="withdrawal-from-classes" class="level3">
+<h3 class="anchored" data-anchor-id="withdrawal-from-classes">Withdrawal from classes</h3>
+<p>Before withdrawing from classes, students should consult their instructor as well as other appropriate university offices. Withdrawing from classes may negatively impact a student’s financial aid award and his or her semester charges. To discuss financial aid and the student bill, contact the <a href="https://sfmc.vcu.edu/contactsfmc/ramq/">Student Financial Management Center (RAMQ)</a> regarding the impact on your financial aid.</p>
+</section>
+<section id="military-short-term-training-or-deployment" class="level3">
+<h3 class="anchored" data-anchor-id="military-short-term-training-or-deployment">Military short-term training or deployment</h3>
+<p>If military students receive orders for short-term training or for deployment/mobilization, they should inform and present their orders to Military Student Services and to their professor(s). For further information on policies and procedures contact <a href="https://militaryservices.vcu.edu/">Military Student Services</a> at 828-5993.</p>
+</section>
+<section id="students-representing-the-university-excused-absences" class="level3">
+<h3 class="anchored" data-anchor-id="students-representing-the-university-excused-absences">Students representing the university – excused absences</h3>
+<p>Students who represent the university (athletes and others) do not choose their schedules. All student-athletes should provide their schedules to their instructors at the beginning of the semester. The Intercollegiate Athletic Council strongly encourages faculty to treat missed classes or exams (because of a scheduling conflict) as excused absences and urges faculty to work with the students to make up the work or exam.</p>
+</section>
+<section id="student-financial-responsibility" class="level3">
+<h3 class="anchored" data-anchor-id="student-financial-responsibility">Student financial responsibility</h3>
+<p><a href="https://sfmc.vcu.edu/contactsfmc/ramq/">Students assume the responsibility of full payment</a> of tuition and fees generated from their registration, all charges for housing and dining services and other applicable miscellaneous charges. Students are ultimately responsible for any unpaid balance on their account as a result of the University Financial Aid Office or their third-party sponsor canceling or reducing their award(s).</p>
+</section>
+</section>
+<section id="technology" class="level2">
+<h2 class="anchored" data-anchor-id="technology">Technology</h2>
+<section id="computer-and-network-use" class="level3">
+<h3 class="anchored" data-anchor-id="computer-and-network-use">Computer and network use</h3>
+<p>All students are expected to know and comply with <a href="https://policy.vcu.edu/universitywide-policies/policies/computer-and-network-resources-use.html">VCU’s Computer and Network Use policy.</a></p>
+</section>
+<section id="student-email-standard" class="level3">
+<h3 class="anchored" data-anchor-id="student-email-standard">Student email standard</h3>
+<p>Email is considered an official method for communication at VCU. Students are expected to check their official VCU email on a frequent and consistent basis (the university recommends daily) in order to remain informed of university-related communications. Students are responsible for the consequences of not reading, in a timely fashion, university-related communications sent to their official VCU student email account. Mail sent to the VCU email address may include notification of university-related actions, including disciplinary action. <a href="https://ts.vcu.edu/media/technology-services/assets/content-assets/university-resources/ts-groups/information-security/StudentEmailStandard.pdf">Students must read this standard in its entirety.</a></p>
+</section>
+<section id="faculty-communication-with-students" class="level3">
+<h3 class="anchored" data-anchor-id="faculty-communication-with-students">Faculty communication with students</h3>
+<p>VCU instructional faculty, administrators, and staff maintain confidentiality of student records and disclose information in accordance with the Family Educational Rights and Privacy Act (FERPA). This means that VCU officials may disclose student record information without the consent of the student in certain situations. To support university operations, for example, VCU officials share information about students with other educational officials as necessary to perform their job duties. FERPA permits this disclosure to school officials who have a legitimate educational interest in the student information. In addition, VCU officials have obligations to report information shared by a student depending on the content of that information, for example, in compliance with VCU’s policy on the duty to report. Unless FERPA permits a certain disclosure, VCU generally requires consent from a student to disclose information from their education record to another individual. You may find additional information on the <a href="https://rar.vcu.edu/records/family-educational-rights-and-privacy-act/">VCU FERPA website.</a></p>
+</section>
+</section>
+<section id="important-dates" class="level2">
+<h2 class="anchored" data-anchor-id="important-dates">Important dates</h2>
+<p>Important dates for the current and future semesters are listed in the <a href="https://academiccalendars.vcu.edu/">VCU Academic Calendar.</a></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
