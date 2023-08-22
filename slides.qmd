@@ -167,7 +167,7 @@ Raytracing | Higher dimensional visualization of spatial extents.  | 3,5
 
 ## Topic Modularity
 
-Each of the topics listed are entirely *self-contained*.  They will each have:
+Each of the topics listed are entirely *self-contained* ([example](https://dyerlab.github.io/ENVS-Lectures/)).  They will each have:
 
 - Student Learning Objectives relevant to the *Topic*
 - Preparatory Content & Resources
@@ -257,7 +257,11 @@ The grade for this course is based upon the totality of the points gained for al
 
 The [Office of the Provost](https://faculty.provost.vcu.edu/faculty-resources/syllabus-statements/) has a list of additional information relevant for syllabi.  Please go visit that page and look over it to familiarize yourself with University-wide regulations and guidelines.
 
+## Questions on Logistics?
 
+&nbsp;
 
+Any questions?<font color="white">[^1]</font>
 
+[^1]:[Here](https://dyerlabteaching.github.io/Welcome/slides.html#/title-slide) are the next slides.
 
