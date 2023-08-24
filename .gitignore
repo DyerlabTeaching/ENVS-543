@@ -49,5 +49,6 @@ rsconnect/
 # Rodney's Customizations
 .DS_Store
 
+*.icloud
 
 /.quarto/
