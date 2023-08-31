@@ -1,9 +1,0 @@
-[submodule "Welcome"]
-	path = Welcome
-	url = https://dyerlab@github.com/DyerlabTeaching/Welcome.git
-[submodule "Git-and-Github"]
-	path = Git-and-Github
-	url = https://dyerlab@github.com/DyerlabTeaching/Git-and-Github.git
-[submodule "Markdown"]
-	path = Markdown
-	url = https://github.com/DyerlabTeaching/Markdown.git
