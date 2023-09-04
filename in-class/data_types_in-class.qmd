@@ -1,0 +1,147 @@
+---
+title: "Data Types In Class Activity"
+format: 
+  html:
+    output-dir: .
+    code-tools: true
+    toc: false
+    exec: true
+    echo: true
+---
+
+## Overview & Objective
+
+This is the first foray into how to actually use `R` and focuses on understanding some of the most basic data types.
+
+## Student Learning Objectives
+
+At the end of this topic, you should be able to:  
+
+ - Describe characteristics of numeric, character, logical, and date data types.  
+ - Use introspection and coercion for basic data types. 
+ - Perform operations on included data types.  
+
+
+## Activity
+
+The following markdown has a set of questions followed by a chunk for you to put in code to answer the question.  Fill them all out as indicated.
+
+
+### Numeric Data
+
+What is your favorite number
+
+```{r}
+
+```
+
+
+The ancient Egyptians were quite cleaver at engineering and building things.  The [Rhind Papyrus](https://en.wikipedia.org/wiki/Rhind_Mathematical_Papyrus), which dates to 1650 BCE, indicates that they estimated the ratio between the circumfrence and the diameter of a circle to be 256 divided by 81.  Mathematically is this more or less than what we estimate $\pi$ as?  What is the magnitude of the difference?
+
+```{r}
+
+```
+
+
+
+The function `sqrt()` provides you the square root of a number. Assign a variable named `root2` to hold the value of `sqrt(2)`.
+
+```{r}
+
+```
+
+
+What is the value contained in the variable below named `sqrOfNegative2`?  Explain the result and make any modifications necessary to be more explicit.
+
+```{r}
+sqrOfNegative2 <- -2^2
+```
+
+
+
+### Character Data
+
+Create variables for your first and last names (and give them proper variable names).
+
+```{r}
+
+```
+
+
+Use the functions `print()` and `cat()` to display these values.  Are these two functions identical?
+
+```{r}
+
+```
+
+
+Create a new variable, `properName`, which is your last name, a commma and space, followed by your first name.  Use the variables above instead of writing out the letters for your names.
+
+```{r}
+
+```
+
+
+The function `nchar()` returns the number of characters in a character variable.  Use it on your `properName`.
+
+```{r}
+
+```
+
+
+### Logical Data 
+
+Create the variables `trueResult` and `falseResult` and assign them the proper logical values for R.
+
+```{r}
+
+```
+
+
+Using the variables `trueResult` and `falseResult` demonstrate logical operators for equality, inequality, and negation.
+
+```{r}
+
+```
+
+
+Using the variables `trueResult` and `falseResult` demonstrate AND operator in R for all pairwise combinations (e.g, for the and operator, show how to evaluate `trueResult` and `trueResult`, `trueResult` and `falseResult`, `falseResult` and `trueResult`, and `falseResult` and `falseResult`)
+
+```{r}
+
+```
+
+Do the same as the previous question for the approriate OR operator.
+
+```{r}
+
+```
+
+
+
+
+In the example above for the square root, the variable `root2` has the square root of the number $2$.  Test the equality (e.g., use the `==` operator) of this varible times itself to the value $2$. Discuss this with your neighbor.  Does this make sense?
+
+```{r}
+
+```
+
+
+
+### Dates
+
+
+When did you first become a college student?  Create a variable representing this date.
+
+```{r}
+
+```
+
+
+How many days was it between then and now?
+
+```{r}
+
+```
+
+

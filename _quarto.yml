@@ -14,9 +14,11 @@ format:
     footnotes-hover: true
     link-external-icon: true
     self-contained: true
+    output-dir: docs
   revealjs:
     self-contained: true
     code-fold: false
     code-overflow: wrap
+    output-dir: docs
     footer: "[Dyerlab](https://dyerlab.org)"
   
