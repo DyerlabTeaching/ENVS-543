@@ -191,6 +191,19 @@ c(1,2,3,4) + c(10,20,30,40,50,60)
 :::
 
 
+## In-Class Activity
+
+For a random and entirely made up example of a homework assignment, the participants raw scores were recored as: 32, 31, 45, 29, 17, 40, 26, and 23.  This was out of 45 total points.  In R, do the following:
+
+1. Create a vector of the scores and assign it to a variable of suitable nomenclature.  
+2. Use the functions `min()`, `sum()`, `max()`, and `mean()` to derive these mathematical propoerties.
+3. Standardize the scores as a percentage.
+4. How many of each letter grade were achieved?
+
+
+
+
+
 
 
 
@@ -320,10 +333,22 @@ X %*% Y
 
 
 
+## In-Class Activity {.smaller}
+
+For most of you, this will be the <em>only</em> time you'll be working with matrices (so soak in the glory of the moment it is all non-matrix R reality from here on out!).  Using the a sequence of numbers from 20 to 42:
+
+- Create matrix with 4 rows.
+- Create a matrix with 5 rows.
+- What happens when you try to create one with 6 rows?
+- Show what the optional argument `byrow` does to a 4x5 matrix (e.g., try both `byrow=TRUE` and `byrow=FALSE`).
+
+
+
+
 # Lists {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
 
 
-## {{< fa bars >}} Lists 
+## Lists 
 
 Lists are more versatile containers in that they *allow you to store different kinds of data* in them.
 
@@ -409,8 +434,25 @@ However this is even more work and looks a bit *less elegant* than the \$ notati
 
 In `R`, you will most likely work with list objects as analysis results rather than as a container to keep your data.  Almost all analyses return their values as a list with the included components.  Here is an example.
 
+
+```{r}
+head( iris )
+```
+
+
+## Iris Data Raw
+
 ```{r}
 summary( iris )
+```
+
+
+## Iris Data Visualized
+
+```{r}
+library( ggplot2 )
+ggplot( iris, aes(Sepal.Length, Petal.Length, color=Species) ) + 
+  geom_point() + theme_minimal()
 ```
 
 
@@ -459,6 +501,22 @@ This is awesome because it makes it *much* easier to use something like the valu
 
 
 > There was a significant relationship between sepal and petal length (`r iris.test$method`, $\rho =$ `r format(iris.test["estimate"], digits=3)`, $t =$ `r format(iris.test["statistic"], digits=3)`, P = `r format(iris.test["p.value"],digits=3)`).
+
+
+
+## In-Class Activity
+
+Do a quick analysis of width for sepals and petals in the three iris species.
+```{r}
+iris.test <- cor.test( iris$Sepal.Width, iris$Petal.Width )
+```
+
+- What is the name of the list element that has the correlation statistic?
+- What are the names of the list element that has the test statistic and probability?
+- Does these data suggest there is a significant relationship?  How do you know? 
+
+
+
 
 
 # Data Frames {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
@@ -601,10 +659,15 @@ beetles %>%
 ```
 
 
+## In-Class
+
+From the beetle data, what is the centroid coordinate of the data set?
+
+
 ## Questions
 
 ::: {layout-ncol="2"}
-If you have any questions, please feel free to either post them as an "Issue" on your copy of this GitHub Repository, post to the [Canvas](https://canvas.vcu.edu) discussion board for the class, or drop me an [email](mailto://rjdyer@vcu.edu).
+If you have any questions, please feel free to post to the [Canvas](https://canvas.vcu.edu) discussion board for the class, or drop me an [email](mailto://rjdyer@vcu.edu).
 
 ![](media/peter_sellers.gif){.middle fig-alt="Peter Sellers looking bored" fig-align="center" width="500"}
 :::
