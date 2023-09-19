@@ -5,7 +5,7 @@ description: |
   The ability to quickly and easily manipulate and rework data is the base foundation for all the work you will be doing in `R`.  There is no more fundamental (and important) skill required than being able to quickly and easily take raw data and reconfigure it properly for inclusion into an analysis, summary, graphic, or table.  Using features of the `tidyverse` library are key.
 ---
 
-![](media/dplyr.png)
+![](media/Tidyverse.png)
 
 ## The Tidyverse Approach
 
