@@ -598,9 +598,6 @@ names( rice )
 If the names are set reasonably in the workflow, then they will be piped directly into tables and figures correctly.  Here is a fully formed output from `R`.
 
 ```{r}
-library( knitr )
-library( kableExtra )
-
 rice %>%
   mutate( Date = mdy_hms( DateTime, 
                           tz="EST"),
@@ -629,6 +626,8 @@ So far, we've been showing the output as raw `R` output in the console or in Mar
 Simply pipe the data into the `kable()` function.
 
 ```{r}
+library( knitr )
+
 df %>%
   kable()
 ```
@@ -649,12 +648,14 @@ For more options see `?kable`
 
 There is a second package, `kableExtra`, that adds a lot more functionality to the display of tabular output.  
 
-[Here](http://haozhu233.github.io/kableExtra/awesome_table_in_html.html) is a great overview of the various customizations that are available.
+[Here](http://haozhu233.github.io/kableExtra/awesome_table_in_html.html) is a great overview of the various customization that is available.
 
 
 ## Basic Style {.smaller}
 
 ```{r}
+library( kableExtra )
+
 kbl %>% 
   kable_styling()
 ```
