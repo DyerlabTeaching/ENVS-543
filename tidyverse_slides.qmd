@@ -1,0 +1,635 @@
+---
+title: "Tidyverse"
+subtitle: "&nbsp;"
+format: revealjs
+author: Rodney Dyer, PhD
+title-slide-attributes: 
+  data-background-image: "media/Tidyverse.png"
+  data-background-position: "right 0em top 0em"
+  data-background-size: initial
+execute: 
+  echo: true
+---
+
+## Topic Guide
+
+- Action verbs  
+- Workflows
+- Strategies
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library( tidyverse )
+library( DiagrammeR )
+```
+
+
+
+
+## R Data Workflow
+
+> Describe the daytime air temperatures at the Rice Rivers Center for February, 2014 by day of the week.
+
+:::{.fragment}
+To do this, we have the following general workflow.
+
+
+```{r out.width='90%', out.height='40%', fig.align='center'}
+#| echo: false
+graph <-
+  create_graph() %>%
+  add_path(
+    n = 5,
+    type = "step",
+    label = c(
+      "Load\\nData",
+      "Make\\nDates",
+      "Select\\nColumns",
+      "Filter\\nRows",
+      "Summarize\\nSomehow"
+    ),
+    node_aes = node_aes(
+      shape = c("square", "circle", "circle", "circle", "rectangle"),
+      width = c(0.75, 0.75, 0.75, 0.75, 0.75),
+      color = "#3C3C3C",
+      fontcolor = "black",
+      fillcolor = c("#61acf0", "#f0a561", "#f0a561", "#f0a561", "#cbd20a"),
+      fontname = "Lato"
+    ),
+    edge_aes = edge_aes(# set edge aesthetics
+      color = "#3C3C3C")
+  ) %>%
+  add_global_graph_attrs(attr = "layout",
+                         value = "dot",
+                         attr_type = "graph") %>%
+  add_global_graph_attrs(attr = "rankdir",
+                         value = "LR",
+                         attr_type = "graph")
+# View the graph in the Viewer
+graph %>% render_graph()
+#widgetframe::frameableWidget( graph )
+```
+
+
+:::
+
+
+
+
+
+
+
+# Action Verbs {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+
+
+
+
+## Data Operators {.smaller background-image="https://live.staticflickr.com/65535/50362129663_0d640ad239_k_d.jpg" background-size="cover" background-position="right"}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+There are a finite number of action verbs that can be used on raw data.  They are *combined* to yield meaningful inferences from our data.
+
+1. Is there more sun on Fridays?  
+2. What is the distribution of high-tide depths for each day in January?  
+3. Is there a relationship between salinity & pH?  
+
+:::
+
+::::
+
+
+## Select {.smaller background-image="https://live.staticflickr.com/65535/50362827791_a32934b310_k_d.jpg" background-size="cover" background-position="right"}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Identify only subset of data columns that you are interested in using.  
+:::
+
+::::
+
+
+## Filter {.smaller background-image="https://live.staticflickr.com/65535/50362989322_6aa00c8398_k_d.jpg" background-size="cover" background-position="right"}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Use only some subset of rows in the data based upon qualities within the columns themselves. 
+:::
+
+::::
+
+
+
+
+## Arrange {.smaller background-image="https://live.staticflickr.com/65535/50362129893_61851436c8_k_d.jpg" background-size="cover" background-position="right"}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Reorder the data using values in one or more columns to sort.
+:::
+
+::::
+
+
+
+## Mutate {.smaller background-image="https://live.staticflickr.com/65535/50362827946_d8d5508dfd_k_d.jpg" background-size="cover" background-position="right"}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Convert one data type to another, scaling, combining, or making any other derivative component.
+:::
+
+::::
+
+
+
+## Summarize {.smaller background-image="https://live.staticflickr.com/65535/50362989492_d4e281b741_k_d.jpg" background-size="cover" background-position="right"}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Perform operations on the data to characterize trends in the raw data as summary statistics.
+:::
+
+::::
+
+## Group {.smaller background-image="https://live.staticflickr.com/65535/50362869456_c869b2a0a9_k_d.jpg" background-size="cover" background-position="right"}
+
+:::: {.columns}
+
+::: {.column width="40%"}
+Partition the data set into groups based upon some taxonomy of categorization.
+:::
+
+::::
+
+
+
+# Workflows {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## Combinations Yield Inferences
+
+The manner in which we organize these action verbs yields an infinite number of combinations.
+
+```{r out.width='75%', out.height='30%', fig.align='center'}
+#| echo: false
+graph <-
+  create_graph() %>%
+  add_path(
+    n = 5,
+    type = "step",
+    label = c(
+      "Load\\nData",
+      "Select\\nColumns",
+      "Overlay\\nPoints",
+      "Overlay\\nTrend",
+      "Show Plot"
+    ),
+    node_aes = node_aes(
+      shape = c("square", "circle", "circle", "circle", "rectangle"),
+      width = c(0.75, 0.75, 0.75, 0.75, 0.75),
+      color = "#3C3C3C",
+      fontcolor = "black",
+      fillcolor = c("#61acf0", "#f0a561", "#f0a561", "#f0a561", "#cbd20a"),
+      fontname = "Lato"
+    ),
+    edge_aes = edge_aes(# set edge aesthetics
+      color = "#3C3C3C")
+  ) %>%
+  add_global_graph_attrs(attr = "layout",
+                         value = "dot",
+                         attr_type = "graph") %>%
+  add_global_graph_attrs(attr = "rankdir",
+                         value = "LR",
+                         attr_type = "graph")
+# View the graph in the Viewer
+graph %>% render_graph()
+```
+
+
+
+
+:::{.fragment}
+
+&nbsp;
+
+```{r out.width='100%', out.height='20%', fig.align='center'}
+#| echo: false
+summary <- create_graph() %>%
+  add_path(
+    n = 6,
+    type = "step",
+    label = c(
+      "Load\\nData",
+      "Group\\nSpecies",
+      "Select\\nColumn",
+      "Estimate\\nMean",
+      "Estimate\\nVariance",
+      "Make Table"
+    ),
+    node_aes = node_aes(
+      shape = c("square", "circle", "circle", "circle", "circle", "rectangle"),
+      width = c(0.75, 0.75, 0.75, 0.75, 0.75, 1.0),
+      color = "#3C3C3C",
+      fontcolor = "black",
+      fillcolor = c("#61acf0", "#f0a561", "#f0a561", "#f0a561", "#f0a561", "#cbd20a"),
+      fontname = "Lato"
+    ),
+    edge_aes = edge_aes(# set edge aesthetics
+      color = "#3C3C3C")
+  ) %>%
+  add_global_graph_attrs(attr = "layout",
+                         value = "dot",
+                         attr_type = "graph") %>%
+  add_global_graph_attrs(attr = "rankdir",
+                         value = "LR",
+                         attr_type = "graph")
+# View the graph in the Viewer
+summary %>% render_graph()
+```
+
+
+:::
+
+
+## &nbsp;
+
+![The Treachery of Images](https://upload.wikimedia.org/wikipedia/en/b/b9/MagrittePipe.jpg)
+
+
+## The Pipe Operator
+
+In `R` we use this grammar.
+
+```{r}
+#| eval: false
+data %>% Y()
+```
+
+To take the values in `data` and pass them **as if you entered the data as the first argument** to the function `Y()`.
+
+:::{.fragment}
+These pipes can be chained together into a single operation.
+```{r}
+#| eval: false
+data %>%
+  func1() %>%
+  func2() %>%
+  func3() -> newData
+```
+:::
+
+
+
+# Examples {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## The Data
+
+The data we will be working with consist of data from the [Rice Rivers Center](https://ricerivers.vcu.edu).
+
+![](media/RiceRiverCenter.png)
+
+## The Raw Data
+
+The raw data are retained in a single Google Spreadsheet that is published as a CSV file and can be found  [here](https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s).
+
+::: {.fragment}
+![](media/Selfie_GoogleSheets.png)
+:::
+
+## The Data in `R`
+
+So, let us load it in here.
+
+```{r}
+url <- "https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/pub?gid=0&single=true&output=csv"
+rice <- read_csv( url )
+names( rice )
+```
+
+
+## Column Selection
+
+Using the column numbers instead of names.
+
+```{r}
+df <- rice[ c(1,3,5,13)]
+summary( df )
+```
+
+
+## Named Column Selection
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- Column names are probably better than column numbers
+
+- Additional assistance from RStudio via *pop-ups*.
+
+- Longer term readability (like next Tuesday & Beyond!)
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+![Figure 1: Popup help for column names in `RStudio` for a data frame in memory](https://live.staticflickr.com/65535/50359964467_03232a3716_w_d.jpg)
+:::
+:::
+
+::::
+
+## Data Pliars
+
+::::{.columns}
+:::{.column width="30%"}
+![](media/dplyr.png)
+:::
+
+:::{.column width="70%"}
+The `dplyr` library defines a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges using `select`, `filter`, `arrange`, `mutate`, `group_by`, and `summarise` functionality.
+
+It is part of `tidyverse`
+:::
+::::
+
+
+
+## Select Tidy
+
+In `tidyverse` we can use the column names and do not need to be quoted.
+
+```{r}
+rice %>%
+  select( DateTime ) -> df
+head( df )
+```
+
+
+
+## Selecting Several
+
+The `select()` function allows you to choose many columns of data to work with.
+
+```{r}
+rice %>%
+  select( DateTime, AirTempF ) -> df 
+head(df)
+```
+
+
+## Selecting to Rearrange
+
+There are times when we want to 
+
+```{r}
+names( rice )
+```
+
+## Selecting to Rearrange
+
+Love the `everything()` function.
+
+```{r}
+rice %>%
+  select( RecordID, ODO_mgl, PH, everything() ) -> df
+names( df )
+```
+
+
+
+## Filter
+
+The function `filter()` works to select records (rows) based upon some criteria.  
+
+```{r}
+range( rice$AirTempF )
+```
+
+:::{.fragment}
+
+&nbsp;
+
+
+```{r}
+rice %>%
+  filter( AirTempF < 32 ) -> df
+range( df$AirTempF )
+```
+:::
+
+
+
+## Combinations of Filters
+
+```{r}
+nrow( rice )
+```
+
+:::{.fragment}
+
+&nbsp;
+
+```{r}
+rice %>%
+  filter( AirTempF > 32, 
+          !is.na(PH), 
+          Turbidity_ntu < 15) -> df
+nrow(df)
+```
+:::
+
+
+
+
+## Arrange
+
+We can sort entire `data.frame` objects based upon the values in one or more of the columns using the `arrange()` function.
+
+```{r}
+rice$WindSpeed_mph[1]
+```
+
+
+:::{.fragment}
+
+&nbsp;
+
+```{r}
+rice %>%
+  arrange( WindSpeed_mph ) -> df 
+df$WindSpeed_mph[1]
+```
+:::
+
+
+## Reverse Sorting Order
+
+To reverse the order, use the negative operator on the column name object in the function.
+
+```{r}
+rice %>%
+  arrange( -WindSpeed_mph ) -> df 
+df$WindSpeed_mph[1]
+```
+
+
+## Cominations of Sorting
+
+You can also sort using several criteria.
+
+```{r}
+rice %>%
+  arrange( -WindSpeed_mph, WindDir ) -> df
+```
+
+
+
+
+
+## Mutations 
+
+The `mutate()` function creates new columns of data.
+
+```{r}
+class( rice$DateTime )
+```
+
+
+## Mutations 
+
+```{r}
+library( lubridate )
+rice %>%
+  mutate( Date = mdy_hms(DateTime, tz = "EST") ) -> df
+class( df$Date )
+```
+
+
+:::{.fragment}
+```{r}
+summary( df$Date )
+```
+:::
+
+
+## Simultaneous Mutations
+
+You can make several mutations in one call *or* you can pipe several mutation events at one time.
+
+```{r}
+rice %>%
+  mutate( Date = mdy_hms(DateTime, tz = "EST"), 
+          Month = month(Date, label = TRUE) ) -> df
+summary( df$Month )
+```
+
+
+## Summarize
+
+The `summarize()` function derives inferences from the current `data.frame` and produces a new one.
+
+```{r}
+rice %>%
+  summarize( `Air Temp` = mean( AirTempF), 
+             `Water Temp` = mean(H2O_TempC, na.rm=TRUE))
+```
+
+
+
+## Group & Summarize
+
+The `group_by()` function allows you to arbitrarily pull together subset of data and prepare them to be worked on by something like `summary()`.
+
+```{r}
+rice %>%
+  mutate( Date = mdy_hms( DateTime, 
+                          tz="EST"),
+          Month = month( Date, 
+                         abbr = FALSE, 
+                         label=TRUE) ) %>%
+  group_by( Month ) %>%
+  summarize( `Air Temp` = mean( AirTempF), 
+             `Water Temp` = mean( H2O_TempC, 
+                                  na.rm=TRUE) ) 
+```
+
+
+
+
+# Stratgies {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+
+## Flows
+
+Here are some strategies to consider.
+
+:::{.incremental}
+1. Do not think that you have to do the whole thing at once.  I typically build up the workflow, one line at a time.  Make sure the output from the previous line is what you think it should be then add the next one.  
+2. Keep your code open and airy, it makes it easier to read and to catch any logical errors that may arrise.  
+3. You can pipe into a lot of different functions.  In fact, any function that takes a data frame can be the recipient of a pipe.  While developing a workflow, I will often pipe into things like `head()`, `summary()`, or `View()` to take a look at what is coming out of my workflow to make sure it resembles what I think it should look like.  
+:::
+
+
+
+
+## Quoted Names
+
+There are times when working with data that we may want to use reasonable names.
+
+```{r}
+names( rice )
+```
+
+## Quoted Names
+
+If the names are set reasonably in the workflow, then they will be piped directly into tables and figures correctly.
+
+```{r}
+library( knitr )
+library( kableExtra )
+
+rice %>%
+  mutate( Date = mdy_hms( DateTime, 
+                          tz="EST"),
+          Month = month( Date, 
+                         abbr = FALSE, 
+                         label=TRUE),
+          AirTemp = (AirTempF-32) * 5/9 ) %>%
+  group_by( Month ) %>%
+  summarize( `Ambient Air` = mean( AirTemp), 
+             `Water Surface` = mean( H2O_TempC, 
+                                  na.rm=TRUE) ) -> df 
+
+```
+
+## Quoted Names
+
+```{r}
+df %>% 
+  kable() %>%
+  kable_paper( full_width=FALSE) %>%
+  add_header_above( c(" "=1, "Temperature (°C)" = 2))
+```
+
+
+
+## Questions
+
+::: {layout-ncol="2"}
+If you have any questions, please feel free to either post them as an "Issue" on your copy of this GitHub Repository, post to the [Canvas](https://canvas.vcu.edu) discussion board for the class, or drop me an [email](mailto://rjdyer@vcu.edu).
+
+![](media/peter_sellers.gif){.middle fig-alt="Peter Sellers looking bored" fig-align="center" width="500"}
+:::

@@ -33,14 +33,14 @@ This course is broken into the three separate sections, each of which maps onto 
 Learning R and basic data manipulations.
 
 | Learning Module          | Assets                                                                                                                                                                |
-|-----------------------|-------------------------------------------------|
+|------------------------|------------------------------------------------|
 | Welcome                  | [Slides](welcome_slides.html)                                                                                                                                         |
 | Analysis Environment     | [Slides](analysis_environment_slides.html)                                                                                                                            |
 | Git & GitHub             | [Slides](git_github_slides.html)                                                                                                                                      |
 | Markdown                 | [Slides](markdown_slides.html), [Narrative](markdown.html)                                                                                                            |
-| Data Types               | [Lecture Video](https://youtu.be/23GLGUvRGcY), [Slides](data_types_slides.html), [Narrative](data_types.html), [In-Class Activity](in-class/data_types_in-class.html) |
-| Data Containers          | [Slides](data_containers_slides.html), [Narrative](data_containers.html)                                                                                              |
-| Tidyverse                |                                                                                                                                                                       |
+| Data Types               | [Lecture Video](https://youtu.be/23GLGUvRGcY), [Slides](data_types_slides.html), [Narrative](data_types.html) |
+| Data Containers          | [Slides](data_containers_slides.html), [Narrative](data_containers.html) |
+| Tidyverse                | [Slides](tidyverse_slides.html), [Narrative](tidyverse.html) |
 | Graphics that Don't Suck |                                                                                                                                                                       |
 | Artificial Intelligence  |                                                                                                                                                                       |
 
