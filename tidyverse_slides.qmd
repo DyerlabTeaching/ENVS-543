@@ -572,13 +572,13 @@ rice %>%
 
 
 
-## Flows
+## Flows {.smaller}
 
 Here are some strategies to consider.
 
 :::{.incremental}
 1. Do not think that you have to do the whole thing at once.  I typically build up the workflow, one line at a time.  Make sure the output from the previous line is what you think it should be then add the next one.  
-2. Keep your code open and airy, it makes it easier to read and to catch any logical errors that may arrise.  
+2. Keep your code open and airy, it makes it easier to read and to catch any logical errors that may arise.  
 3. You can pipe into a lot of different functions.  In fact, any function that takes a data frame can be the recipient of a pipe.  While developing a workflow, I will often pipe into things like `head()`, `summary()`, or `View()` to take a look at what is coming out of my workflow to make sure it resembles what I think it should look like.  
 :::
 
@@ -595,7 +595,7 @@ names( rice )
 
 ## Quoted Names
 
-If the names are set reasonably in the workflow, then they will be piped directly into tables and figures correctly.
+If the names are set reasonably in the workflow, then they will be piped directly into tables and figures correctly.  Here is a fully formed output from `R`.
 
 ```{r}
 library( knitr )
@@ -615,21 +615,91 @@ rice %>%
 
 ```
 
-## Quoted Names
+
+
+## Tabular Output
+
+So far, we've been showing the output as raw `R` output in the console or in Markdown.  However, let's take it up a notch and get a bit more formal and use a package that will make professional looking tables.
+
+[Here](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) is the official GitHub repository for the project.
+
+
+## Using `kable`
+
+Simply pipe the data into the `kable()` function.
 
 ```{r}
-df %>% 
-  kable() %>%
+df %>%
+  kable()
+```
+## Options to `kable` {.smaller}
+
+```{r}
+df %>%
+  kable( digits = 2, 
+         caption = "Air and water temperatures measured at the Rice Rivers Center.") -> kbl
+
+kbl
+```
+
+For more options see `?kable`
+
+
+## Making Fancier Tables
+
+There is a second package, `kableExtra`, that adds a lot more functionality to the display of tabular output.  
+
+[Here](http://haozhu233.github.io/kableExtra/awesome_table_in_html.html) is a great overview of the various customizations that are available.
+
+
+## Basic Style {.smaller}
+
+```{r}
+kbl %>% 
+  kable_styling()
+```
+
+
+## Paper Style {.smaller}
+
+```{r}
+kbl %>% 
+  kable_paper()
+```
+
+
+## Classic Style {.smaller}
+
+```{r}
+kbl %>% 
+  kable_classic( full_width = FALSE )
+```
+
+
+## Fancy Material Styles {.smaller}
+
+```{r}
+kbl %>% 
+  kable_material( c("striped", "hover"), 
+                  full_width = FALSE )
+```
+
+
+
+
+## Quoted Names & More Fancy Headings {.smaller}
+
+```{r}
+kbl %>% 
   kable_paper( full_width=FALSE) %>%
   add_header_above( c(" "=1, "Temperature (°C)" = 2))
 ```
 
 
-
 ## Questions
 
 ::: {layout-ncol="2"}
-If you have any questions, please feel free to either post them as an "Issue" on your copy of this GitHub Repository, post to the [Canvas](https://canvas.vcu.edu) discussion board for the class, or drop me an [email](mailto://rjdyer@vcu.edu).
+If you have any questions, please feel free to post to the [Canvas](https://canvas.vcu.edu) discussion board for the class, drop me an [email](mailto://rjdyer@vcu.edu), or show up for Office Hours.
 
 ![](media/peter_sellers.gif){.middle fig-alt="Peter Sellers looking bored" fig-align="center" width="500"}
 :::
