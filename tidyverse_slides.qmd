@@ -24,6 +24,8 @@ execute:
 #| warning: false
 library( tidyverse )
 library( DiagrammeR )
+library( knitr )
+library( kableExtra )
 ```
 
 
