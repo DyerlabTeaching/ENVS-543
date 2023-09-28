@@ -1,0 +1,597 @@
+---
+title: "Visualization with <tt>GGPlot</tt>"
+subtitle: "&nbsp;"
+author: Rodney Dyer, PhD
+format: revealjs
+execute: 
+  echo: true
+---
+
+
+
+
+## Learning Objectives
+
+
+- Set up online repositories for data such as Google Drive and retrieve it directly into RStudio for utilization.
+
+- Describe how the Grammar of Graphics deviates from built-in `plot`ting commands.
+
+- Use an `aes`-thetic to define which data components of the data will be used in constructing the graphic.
+
+- Apply `geom`metric data layers to existing plots.
+
+
+
+
+## Data 
+
+For this example, we will use the [Rice Rivers Center](https://ricerivers.vcu.edu) data again.
+
+```{r}
+library( tidyverse )
+url <- "https://raw.githubusercontent.com/dyerlab/ENVS-Lectures/master/data/arapat.csv"
+data <- read_csv(url)
+```
+
+# The Grammar of Graphics {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+
+# &nbsp; {background-color="white" background-image="https://live.staticflickr.com/65535/50295214407_bc0f4d10b6_c_d.jpg" background-size="auto" background-position="center"}
+
+# &nbsp; {background-color="white" background-image="https://live.staticflickr.com/65535/50294412713_25bbd52230_c_d.jpg" background-size="auto" background-position="center"}
+
+
+## Components of Graphical Objects {.smaller .scrollable}
+
+:::{.incremental}
+- A aesthetic statement indicating which columns of data to use and how to use them in the plot (designating x-axis vs color, etc.).
+
+- An estimate of a trendline through the data (the red one), which displays a statistical summary of the raw data.
+
+- A set of geometric overlays for the points which include size and shape configurations.
+
+- Specified color scheme for the regions.
+
+- Labeling of a subset of the data (which is done using a separate data.frame derived from the first).
+
+- Labels on axes.
+
+- A legend positioned in a specific fashion.
+
+- A title over the whole thing.
+
+- A theme for the rest of the coloring and customized lines and grids.
+
+:::
+
+
+
+
+# &nbsp; {background-color="white" background-image="https://live.staticflickr.com/65535/50295214407_bc0f4d10b6_c_d.jpg" background-size="auto" background-position="center"}
+
+
+## The Grammar of Graphics
+
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- Data  
+
+- Aesthetics  
+
+- Transformations  
+
+- Partitions  
+
+- Auxillary Text 
+
+- Overlays
+:::
+
+::: {.column width="50%"}
+![](https://live.staticflickr.com/65535/50295255672_46390d9ee5_w_d.jpg)
+:::
+
+::::
+
+
+## The `ggplot2` Library
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](https://live.staticflickr.com/65535/50295284047_ebb5dec2e8_w_d.jpg)
+:::
+
+::: {.column width="50%"}
+### R Packages for Data Science
+  
+  - RStudio + Hadley Wickham
+  
+  - Collection of Packages
+  
+  - Makes you <font color="red">AWESOME</font>
+  
+```{r}
+library( ggplot2 )
+```
+:::
+
+::::
+
+
+## The Aesthetics
+
+An *aesthetic* is a function that allows you to tell the graphics which columns of data are to be used in the creation of graph features.
+
+```{r}
+aes( x = Sepal.Length, y = Sepal.Width )
+```
+
+&nbsp;
+
+:::{.fragment}
+Commonly included **within** the initial call to `ggplot()`
+
+```{r eval=FALSE}
+ggplot( iris, aes( x = Sepal.Length, y = Sepal.Width ) )
+```
+:::
+
+
+
+## Stepwise Creation of a Plot
+
+
+```{r}
+ggplot( iris )
+```
+
+## Stepwise Creation of a Plot
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length) )
+```
+
+## Stepwise Creation of a Plot
+
+Adding a Geometry Layer
+
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length) ) + 
+  geom_histogram()
+```
+
+
+
+## Stepwise Creation of a Density Plot
+
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length) ) +
+  geom_density() 
+```
+
+## A Scatter Plot 
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length, y = Sepal.Width) ) + geom_point() 
+```
+
+
+
+## Scatterplot with Colors
+
+*Aesthetics* also contribute to symbologies and colors
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length, 
+                   y = Sepal.Width, 
+                   color=Species) ) + 
+  geom_point() 
+```
+
+
+
+
+## In & Out of `aes()`
+
+```{r}
+ggplot( iris ) + 
+  geom_point(aes( x = Sepal.Length, y = Sepal.Width, col=Species), shape=5)
+```
+
+
+## Iterative Building of Graphics
+
+```{r}
+p <- ggplot( iris )
+p <- p + geom_point( aes( x = Sepal.Length, 
+                          y = Sepal.Width, 
+                          col=Species, 
+                          shape=Species), 
+                     size=3, 
+                     alpha=0.75 ) 
+p <- p + xlab("Sepal Length")
+p <- p + ylab("Sepal Length")
+class(p)
+```
+
+
+## Printing out `p`
+
+```{r}
+p
+```
+
+
+## Scope of Visibility
+
+Only things in `ggplot()` apply to *all* following components.  Placing `aes()` or `data=` parts in later components *only* make them visible to that particular component.
+
+```{r eval=FALSE }
+ggplot( iris, aes( x = Sepal.Length, y = Sepal.Width) ) + 
+  geom_point() + 
+  stat_smooth() 
+```
+
+:::{.fragment}
+```{r eval=FALSE}
+ggplot( iris ) + 
+  geom_point( aes( x = Sepal.Length, y = Sepal.Width) ) + 
+  stat_smooth(  aes( x = Sepal.Length, y = Sepal.Width) )
+```
+:::
+
+
+:::{.fragment}
+```{r eval=FALSE}
+ggplot() + 
+  geom_point( aes( x = Sepal.Length, y = Sepal.Width), data = iris )  + 
+  stat_smooth( aes( x = Sepal.Length, y = Sepal.Width), data = iris )  
+```
+:::
+
+
+
+# Themes {background-color="white" background-image="https://live.staticflickr.com/65535/50294412713_25bbd52230_c_d.jpg" background-size="auto" background-position="center"}
+
+
+# <font color="white">Customizable!!!</font> {background-color="white" background-image="https://media.giphy.com/media/dWEk3w1Uo97qw/giphy.gif" background-size="cover" background-position="center"}
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+
+
+
+
+
+
+
+## &nbsp;
+
+```{r}
+p + theme_bw()
+```
+
+
+
+## &nbsp;
+
+```{r}
+p + theme_bw()
+```
+
+
+
+## &nbsp;
+
+```{r}
+p + theme_gray()
+```
+
+
+
+## &nbsp;
+
+```{r}
+p + theme_linedraw()
+```
+
+
+
+## &nbsp;
+
+```{r}
+p + theme_dark()
+```
+
+
+
+## &nbsp;
+
+```{r}
+p + theme_minimal()
+```
+
+
+
+## &nbsp;
+
+```{r}
+p + theme_classic()
+```
+
+
+## &nbsp;
+
+```{r}
+p + theme_void()
+```
+
+## Create Your Own Themes {.scrollable .smaller}
+
+```{r}
+source("theme_dyerlab_grey.R")
+theme_dyerlab_grey
+```
+
+
+## Create Your Own Themes
+
+```{r}
+p + theme_dyerlab_grey()
+```
+
+## Font Sizes
+
+```{r}
+p + theme_dyerlab_grey( base_size = 22)
+```
+
+## Globally Set Font Sizes
+
+You can also set the theme and base sizes (and other theme-related items) globally for an entire document/presentation as:
+
+```{r}
+#| eval: false
+ggplot2::theme_set( theme_bw( base_size=16) )
+```
+
+
+
+## Boxplots
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length) ) + 
+  geom_boxplot( notch=TRUE )
+```
+
+
+## Species Differences
+
+```{r}
+ggplot( iris, aes(x=Species, y=Sepal.Length) )  + 
+  geom_boxplot( notch=TRUE )
+```
+
+
+## Species Differences Fill Colors
+
+```{r}
+ggplot( iris, aes(x=Species, y=Sepal.Length) )  + 
+  geom_boxplot( notch=TRUE, fill=c("#002145") ) +
+  ylab("Sepal Length")
+```
+
+
+
+## Species Differences Fill Colors
+
+```{r}
+ggplot( iris, aes(x=Species, y=Sepal.Length) )  + 
+  geom_boxplot( notch=TRUE, fill=c("#002145", "#a5acaf","#66c010") ) +
+  ylab("Sepal Length")
+```
+
+
+
+# Overlays {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+
+
+
+# Overlaying a Trendline
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length, y = Sepal.Width) ) + 
+  geom_point()  + 
+  stat_smooth()
+```
+
+
+## Overlaying a Trendline
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length, y = Sepal.Width) ) + 
+  geom_point()  + 
+  stat_smooth( method="lm", formula = "y ~ x")
+```
+
+
+
+## Stacking Order 
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length, y = Sepal.Width) ) + 
+  geom_point( color="red")  + 
+  stat_smooth( fill="black", alpha=1)
+```
+
+
+## Stacking Order 
+
+```{r}
+ggplot( iris, aes( x = Sepal.Length, y = Sepal.Width) ) + 
+  stat_smooth( fill="black", alpha=1) + 
+  geom_point( color="red")  
+```
+
+
+## On-The-Fly Transformations
+
+Customizing the y-axis data format...
+
+```{r out.width="30%"}
+ggplot( iris, aes(x = Sepal.Length) ) + 
+  geom_histogram( aes( y = ..density.. ), 
+                  color="green", 
+                  fill="orange", bins = 15 ) + 
+  geom_density( color = "magenta", lwd=1.5 )  
+```
+
+
+
+## Textual Overlays
+
+```{r}
+cor_model <- cor.test( iris$Sepal.Length, iris$Sepal.Width)
+cor_model
+```
+
+:::{.fragment}
+```{r}
+names( cor_model ) 
+```
+:::
+
+
+## Formatting as Text
+
+```{r}
+cor.text <- paste( "r = ", 
+                   format( cor_model$estimate, digits=4), 
+                   ";\n P = ", 
+                   format( cor_model$p.value, digits=4 ), 
+                   sep="" ) 
+cor.text
+```
+
+
+
+## &nbsp;
+
+
+```{r out.width="55%"}
+p + geom_text( aes(x=7.25, y=4.25, label=cor.text) )
+```
+
+## Labels
+
+
+```{r}
+sLength <- by( iris$Sepal.Length, iris$Species, mean )
+sWidth <- by( iris$Sepal.Width, iris$Species, mean )
+
+df <- data.frame( Sepal.Length = as.numeric( sLength ),
+                  Sepal.Width = as.numeric( sWidth ),
+                  Species = levels( iris$Species ) )
+df
+```
+
+## Labels
+
+```{r}
+ggplot( iris, aes(Sepal.Length, Sepal.Width) ) + 
+  geom_point( aes(color=Species) ) + 
+  geom_text( aes(label=Species), data=df) 
+```
+
+
+
+
+## Smart Labels
+
+```{r}
+library( ggrepel )
+```
+
+![](https://live.staticflickr.com/65535/50305860422_f3cf5f5545_c_d.jpg)
+
+
+## &nbsp;
+
+
+```{r}
+ggplot( iris, aes(Sepal.Length, Sepal.Width) ) + 
+  geom_point( aes(color=Species) ) + 
+  geom_label_repel( aes(label=Species), data=df )
+```
+
+## Remove Legend
+
+```{r}
+ggplot( iris, aes(Sepal.Length, Sepal.Width) ) + 
+  geom_point( aes(color=Species) ) + 
+  geom_label_repel( aes(label=Species), data=df ) + 
+  guides( color = FALSE )
+```
+
+
+
+
+
+
+
+
+
+
+
+## Questions
+
+::: {layout-ncol="2"}
+If you have any questions, please feel free to either post them as an "Issue" on your copy of this GitHub Repository, post to the [Canvas](https://canvas.vcu.edu) discussion board for the class, or drop me an [email](mailto://rjdyer@vcu.edu).
+
+![](media/peter_sellers.gif){.middle fig-alt="Peter Sellers looking bored" fig-align="center" width="500"}
+:::

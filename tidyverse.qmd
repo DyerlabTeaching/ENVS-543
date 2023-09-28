@@ -16,7 +16,8 @@ library( tidyverse )
 library( lubridate )
 ```
 
-### The Data
+### The Datat
+
 
 For this topic we will use some example data from the [Rice Rivers Center](https://ricerivers.vcu.edu).  These data represent both atmospheric and water data collected from instrumentation on-site.  I have stored these data in a spreadsheet that is shared on Google Drive as a CSV file.  
 
