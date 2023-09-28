@@ -48,8 +48,8 @@ Learning R and basic data manipulations.
 | Data Containers          | [Slides](data_containers_slides.html), [Narrative](data_containers.html)                                      |
 +--------------------------+---------------------------------------------------------------------------------------------------------------+
 | Tidyverse                | [Slides](tidyverse_slides.html), [Narrative](tidyverse.html)                                                  |
-+--------------------------+---------------------------------------------------------------------------------------------------------------+
-| Graphics that Don't Suck | Classic Plotting Slides, Classic Narrative                                                                    |
++--------------------------+---------------------------------------------------------------------------------------------------------------+  
+| Graphics that Don't Suck | [Classic Plotting Slides](classic_graphics_slides.html), [Classic Narrative](classic_graphics.html)<br/> [GGPlot Slides](ggplot_graphics_slides.html), [GGPlot Narrative](ggplot_graphics.html)   |  
 +--------------------------+---------------------------------------------------------------------------------------------------------------+
 | Artificial Intelligence  |                                                                                                               |
 +--------------------------+---------------------------------------------------------------------------------------------------------------+
