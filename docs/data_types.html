@@ -3049,9 +3049,7 @@ vertical-align: -.125em;
   <li><a href="#basic-date-objects" id="toc-basic-date-objects" class="nav-link" data-scroll-target="#basic-date-objects">Basic Date Objects</a></li>
   <li><a href="#dates-times" id="toc-dates-times" class="nav-link" data-scroll-target="#dates-times">Dates &amp; Times</a></li>
   <li><a href="#lubridate" id="toc-lubridate" class="nav-link" data-scroll-target="#lubridate">Lubridate</a></li>
-  <li><a href="#filtering-on-date-objects" id="toc-filtering-on-date-objects" class="nav-link" data-scroll-target="#filtering-on-date-objects">Filtering on Date Objects</a></li>
   </ul></li>
-  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
   </ul>
 </nav>
 </div>
@@ -3520,7 +3518,7 @@ The stuff inside the parenthesis are called <em>arguments</em> and are the data 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>( <span class="fu">Sys.time</span>() )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1695118727</code></pre>
+<pre><code>[1] 1697656174</code></pre>
 </div>
 </div>
 <section id="basic-date-objects" class="level3">
@@ -3652,7 +3650,7 @@ Attaching package: &#39;lubridate&#39;</code></pre>
 </section>
 <section id="lubridate" class="level3">
 <h3 class="anchored" data-anchor-id="lubridate">Lubridate</h3>
-<p>Instead of using the built-in <code>as.Date()</code> functionality, I like the <code>lubridate</code> library<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> as it has a lot of additional functionality that we’ll play with a bit later.</p>
+<p>Instead of using the built-in <code>as.Date()</code> functionality, I like the <code>lubridate</code> library[^1] as it has a lot of additional functionality that we’ll play with a bit later.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Date <span class="ot">&lt;-</span> <span class="fu">parse_date_time</span>( df<span class="sc">$</span>Date, </span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">orders=</span>format, </span>
@@ -3715,73 +3713,11 @@ Attaching package: &#39;lubridate&#39;</code></pre>
 7 2020-12-11 21:48:02   Friday</code></pre>
 </div>
 </div>
-<p>However, we should probably turn it into a factor (e.g., a data type with pre-defined levels—and for us here—an intrinsic order of the levels).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>Weekday <span class="ot">&lt;-</span> <span class="fu">factor</span>( df<span class="sc">$</span>Weekday, </span>
-<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">ordered =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> days_of_week</span>
-<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a>                        )</span>
-<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>( df<span class="sc">$</span>Weekday )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Sunday    Monday   Tuesday Wednesday  Thursday    Friday  Saturday 
-        2         0         0         0         1         2         2 </code></pre>
-</div>
-</div>
+<p>However, we should probably turn it into a factor (e.g., a data type with pre-defined levels—and for us here</p>
 </section>
-<section id="filtering-on-date-objects" class="level3">
-<h3 class="anchored" data-anchor-id="filtering-on-date-objects">Filtering on Date Objects</h3>
-<p>We can easily filter the content within a <code>data.frame</code> using some helper functions such as <code>hour()</code>, <code>minute()</code>, <code>weekday()</code>, etc. Here are some examples including pulling out the weekends.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>weekends <span class="ot">&lt;-</span> df[ df<span class="sc">$</span>Weekday <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Saturday&quot;</span>,<span class="st">&quot;Sunday&quot;</span>), ]</span>
-<span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>weekends</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                 Date  Weekday
-1 2004-08-21 07:33:51 Saturday
-2 2008-07-12 21:23:08 Saturday
-3 2010-02-14 08:18:30   Sunday
-4 2018-12-23 23:11:45   Sunday</code></pre>
-</div>
-</div>
-<p>finding items that are in the past (paste being defined as the last time this document was knit).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>past <span class="ot">&lt;-</span> df<span class="sc">$</span>Date[ df<span class="sc">$</span>Date <span class="sc">&lt;</span> <span class="fu">Sys.time</span>() ]</span>
-<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a>past</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;2004-08-21 07:33:51 EST&quot; &quot;2008-07-12 21:23:08 EST&quot;
-[3] &quot;2010-02-14 08:18:30 EST&quot; &quot;2018-12-23 23:11:45 EST&quot;
-[5] &quot;2019-02-01 16:42:00 EST&quot; &quot;2012-05-17 01:23:23 EST&quot;
-[7] &quot;2020-12-11 21:48:02 EST&quot;</code></pre>
-</div>
-</div>
-<p>Items that are during working hours</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>work <span class="ot">&lt;-</span> df<span class="sc">$</span>Date[ <span class="fu">hour</span>(df<span class="sc">$</span>Date) <span class="sc">&gt;=</span> <span class="dv">9</span> <span class="sc">&amp;</span> <span class="fu">hour</span>(df<span class="sc">$</span>Date) <span class="sc">&lt;=</span> <span class="dv">17</span> ]</span>
-<span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a>work</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] &quot;2019-02-01 16:42:00 EST&quot;</code></pre>
-</div>
-</div>
-<p>And total range of values in days using normal arithmatic operations such as the minus operator.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(df<span class="sc">$</span>Date) <span class="sc">-</span> <span class="fu">min</span>(df<span class="sc">$</span>Date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 5956.593 days</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="questions" class="level2">
-<h2 class="anchored" data-anchor-id="questions">Questions</h2>
-<p>If you have any questions for me specifically on this topic, please post as an Issue in your repository, otherwise consider posting to the discussion board on <a href="https://canvas.vcu.edu">Canvas</a>.</p>
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>If you get an error saying something like, “there is no package named lubridate” then use <code>install.packages(&quot;lubridate&quot;)</code> and install it. You only need to do this once.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main>
+</main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

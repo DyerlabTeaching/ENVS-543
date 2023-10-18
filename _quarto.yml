@@ -15,10 +15,12 @@ format:
     link-external-icon: true
     self-contained: true
     output-dir: docs
+    format-links: false
   revealjs:
     self-contained: true
     code-fold: false
     code-overflow: wrap
     output-dir: docs
     footer: "[Dyerlab](https://dyerlab.org)"
+    format-links: false
   
