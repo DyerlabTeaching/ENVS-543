@@ -1,0 +1,26 @@
+---
+title: "Plotting"
+author: "Rodney"
+---
+
+
+
+```{r}
+library( tidyverse )
+library( lubridate )
+
+url <- "https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/pub?gid=0&single=true&output=csv"
+rice <- read_csv( url )
+summary( rice )
+
+
+```
+
+
+
+
+
+
+
+
+
