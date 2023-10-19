@@ -1,6 +1,10 @@
 project:
   title: "ENVS 543-Fall 2023"
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "!homework/"
+    - "!in-class/"
 
 format:
   html:
