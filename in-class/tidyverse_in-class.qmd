@@ -1,0 +1,123 @@
+---
+title: "Tidyverse"
+subtitle: "In Class Activity"
+format: html
+execute:
+  echo: false
+---
+
+
+## The Question
+
+> Describe the daytime air temperatures at the Rice Rivers Center for February, 2014 by day of the week.
+
+
+## The Data
+
+For this topic we will use some example data from the [Rice Rivers Center](https://ricerivers.vcu.edu).  These data represent both atmospheric and water data collected from instrumentation on-site.  I have stored these data in a spreadsheet that is shared on Google Drive as a CSV file.
+
+```{r}
+library( tidyverse )
+url <- "https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/pub?gid=0&single=true&output=csv"
+read_csv( url ) %>%
+  mutate( Date = mdy_hms(DateTime) ) %>%        
+  select( -DateTime ) %>% 
+  mutate( Weekday = wday(Date, label=TRUE, abbr = FALSE ) ) -> rice 
+
+
+summary( rice )
+
+```
+
+These data represent measurements taken every 15 minutes, 24 hours a day, 7 days a week, 365 days a year.  For brevity, this file contains measurements starting at `r rice$DateTime[1]` and ending at `r rev(rice$DateTime)[1]` (only `r nrow(rice)` records here...).
+
+If you look at the summary of the data above, you will see several things, including:
+
+- Date and time objects are `character`
+- Some measurements are in Standard and some in Imperial with units in the same file include both °F and °C, as well as measurements in meters, feet, and inches.  In fact, there are duplication of data columns in different units (guess what kind of correlation they might have...)
+
+
+
+Q: Mean Rainfall by Day of the Week
+
+```{r}
+
+library( knitr )
+library( kableExtra )
+
+rice %>%   # load the data
+  select( Weekday, Rain_in) %>%                   # select weekday
+  mutate( Rain = Rain_in * 2.54 ) %>%                 # convert to cm
+  group_by( Weekday ) %>%
+  summarize( `Mean Rain (cm)` = mean(Rain) ) %>%
+  kable(digits = 4 ) %>%
+  kable_paper( full_width = FALSE)
+  
+  
+# summarize Mean Rainfall
+```
+
+
+
+
+
+
+```{r}
+
+
+```
+
+
+Min & Max Turbidity by Month as Kable 
+
+```{r}
+rice %>%
+  mutate( Month = month( Date,label = TRUE, abbr = FALSE ) ) %>%
+  group_by( Month ) %>% 
+  summarize( Minimum = min( Turbidity_ntu, na.rm=TRUE  ), 
+              Maximum = max( Turbidity_ntu, na.rm=TRUE  ) ) 
+  
+```
+
+
+
+
+```{r}
+
+rice  %>%                                    # get the data 
+  select( RelHumidity, AirTempF )  %>%       # select Rel Hum & Temp
+  filter( AirTempF > 32 )          %>%        # filter
+# mutate
+# summarize 
+
+```
+
+
+
+
+
+
+## Weekly High Tide
+
+Find the highest tide for each week in the dataset
+
+
+```{r}
+
+```
+
+
+
+
+? High and low Chaluga for Month in Day or Night 
+
+Month    | Daytime  | High | Mean | Low 
+---------|----------|------|------|-----
+January  | Day      |      |      |   
+         | Night    |      |      | 
+February | Day      |      |      |   
+         | Night    |      |      | 
+
+
+
+

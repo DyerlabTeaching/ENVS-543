@@ -1,0 +1,10 @@
+---
+title: "Basic Plotting"
+---
+
+
+
+```{r}
+summary( iris )
+```
+
