@@ -52,3 +52,5 @@ rsconnect/
 *.icloud
 
 /.quarto/
+homework/*
+in-class/*
