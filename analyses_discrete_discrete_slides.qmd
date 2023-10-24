@@ -1,0 +1,799 @@
+---
+title: "Discrete Data Types"
+subtitle: "Defining Categorical Types"
+author: Rodney Dyer, PhD
+format: revealjs
+execute:
+  echo: true
+---
+
+# &nbsp; {background-color="white" background-image="media/AnalysisQuadrant.png" background-size="65%" background-position="center"}
+
+```{r}
+#| echo: false 
+library(fontawesome)
+library( tidyverse )
+library( ggrepel )
+```
+
+
+## Student Learning Objectives
+
+At the end of this topic you should be able to:
+
+- Create, manage, and use `factor` data types.
+- Perform statistical analysis on singe-vectors of count data.
+- Create and analyze discrete data in a contingency table approach.
+
+
+## Topics Covered
+
+In this *brief* presentation, we'll be introducing the following items:
+
+- Discrete Data & Factor Data Types
+- The 🐈 🐈 🐈‍⬛ 🐈   library
+- Formal Binomial Tests
+- Contingency Table Analysis
+
+# Discrete Data {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## Categorical Data Types {.smaller}
+
+
+&nbsp;
+
+::::{.columns}
+
+:::{.column width="50%"}
+Unique and individual grouping that can be applied to a study design.  
+
+- Case sensitive  
+- Can be ordinal  
+- Typically defined as `character` type
+:::
+
+
+:::{.column width="50%"}
+```{r}
+weekdays <- c("Monday","Tuesday","Wednesday",
+              "Thursday","Friday","Saturday", 
+              "Sunday")
+```
+
+&nbsp;
+
+```{r}
+class( weekdays )
+```
+
+&nbsp;
+
+```{r}
+
+weekdays
+```
+
+
+:::
+
+
+::::
+
+
+
+
+## Making Up Data 🤷🏻‍
+
+The function `sample()` allows us to take a random sample of elements from a vector of potential values.  
+
+
+```{r}
+chooseOne <- sample( c("Heads","Tails"), size=1 )
+chooseOne
+```
+
+
+## Making Up More Data 🤷🏻‍ {.smaller}
+
+However, if we want a large number items, we can have them with or without replacement.
+
+```{r}
+sample( c("Heads","Tails"), size=10, replace=TRUE )
+```
+
+
+
+
+## Weekdays as example 
+
+We'll pretend we have a bunch of data related to the day of the week.
+
+```{r}
+days <- sample( weekdays, size=40, replace=TRUE)
+summary( days )
+days
+```
+
+
+
+## Turn it into a `factor`
+
+```{r}
+data <- factor( days )
+is.factor( data )
+class( data )
+```
+
+
+## Data Type Specific Printing & Summaries
+
+
+```{r}
+data
+```
+
+::: {.fragment}
+&nbsp;
+
+&nbsp;
+<font color="red">Notice `Levels`.</font>
+:::
+
+## Factor Levels
+
+Each factor variable is defined by the `levels` that constitute the data.  This is a <font color="red">finite</font> set of unique values.
+
+```{r}
+levels( data)
+```
+
+
+## Factor Ordination
+
+If a factor is not ordinal, it does not allow the use relational comparison operators.
+
+```{r}
+#| warning: true
+data[1] < data[2]
+```
+
+## Ordination = Ordered
+
+```{r}
+is.ordered( data )
+```
+
+
+
+## Ordination of Factors {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+Where ordination matters:
+
+- Fertilizer Treatments in KG of N<sub>2</sub> per hectare: 10 kg N<sub>2</sub>, 20 N<sub>2</sub>, 30 N<sub>2</sub>,  
+
+- Days of the Week: `Friday` is not followed by `Monday`,   
+
+- Life History Stage: seed, seedling, juvenile, adult, etc.
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+Where ordination is irrelevant:
+
+- River   
+
+- State or Region   
+
+- Sample Location  
+:::
+:::
+
+::::
+
+
+## Making Ordered Factors
+
+
+
+
+```{r}
+data <- factor( days, ordered = TRUE)
+is.ordered( data )
+```
+
+
+
+:::{.fragment}
+```{r}
+data
+```
+
+The problem is that the default ordering is actually *alphabetical!*
+:::
+
+
+
+## Specifying the Order
+
+Specifying the Order of Ordinal Factors
+
+
+
+```{r}
+data <- factor( days, ordered = TRUE, levels = weekdays)
+data
+```
+
+::: {.fragment}
+<center><img src="https://media.giphy.com/media/KEYbcgR8oKQzwpwvLU/giphy-downsized-large.gif?cid=ecf05e47pagn8g10iwyysc86x07tgew8evhr1dbkahub7cuu&rid=giphy-downsized-large.gif&ct=g" height=200></center>
+
+:::
+
+
+## Sorting Is Now Relevant
+
+```{r}
+sort( data )
+```
+
+
+
+
+## Fixed Set of Levels
+
+You cannot assign a value to a factor that is not one of the pre-defined levels.
+
+```{r}
+#| error: true
+#| warning: true
+data[3] <- "Bob"
+```
+
+
+
+
+
+# 🐈 🐈 🐈‍⬛ 🐈  <br/> `forcats` {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## The `forcats` library
+
+Part of the `tidyverse` group of packages.
+
+```{r}
+library(forcats)
+```
+
+This library has a lot of helper functions that make working with factors a bit easier.  I'm going to give you a few examples here but **strongly** encourage you to look a the cheat sheet for all the other options.
+
+
+## Counting Factors
+
+A summary of levels.
+
+```{r}
+fct_count( data )
+```
+
+## Lumping Factors
+
+Coalescing low frequency samples.
+
+```{r}
+lumped <- fct_lump_min( data, min = 5)
+fct_count(  lumped )
+```
+
+## Reordering Factors
+
+We can reorder by one of several factors including: *appearance order*, *# of observations*, or *numeric*
+
+*By Appearance*
+
+```{r}
+freq <- fct_inorder( data )
+levels( freq )
+```
+
+:::{.fragment}
+*By Order of Appearance*
+```{r}
+ordered <- fct_infreq( data )
+levels( ordered )
+```
+:::
+
+
+
+
+
+## Reorder Specific Levels
+
+This pulls out specific level instances and *puts them in the lead position* in the order that you give them following the vector of data types.
+
+```{r}
+newWeek <- fct_relevel( data, "Saturday", "Sunday")
+levels( newWeek )
+```
+
+
+
+## Dropping Missing Levels
+
+There are times when some subset of your data does not include **every** an example of each level, here is how you drop them.
+
+```{r}
+data <- sample( weekdays[1:5], size=40, replace=TRUE )
+data <- factor( data, ordered=TRUE, levels = weekdays )
+summary( data )
+```
+
+## Dropping Missing Levels
+
+
+```{r}
+fct_drop( data ) -> dropped
+summary( dropped )
+```
+
+
+
+
+## Example `iris` Data {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+<center>![Ronald Aylmer Fisher<br/>1890 - 1962](https://live.staticflickr.com/65535/51479325426_ee1d73fc4b_o_d.jpg)</center>
+:::
+
+::: {.column width="50%"}
+British polymath, mathematician, statistican, geneticist, and academic.  Founded things such as:
+
+ - Fundamental Theorem of Natural Selection,
+ - The `F` test,
+ - The `Exact` test,
+ - Linear Discriminant Analysis,
+ - Inverse probability
+ - Intra-class correlations
+ - Sexy son hypothesis.... 🥰
+:::
+
+::::
+
+
+
+## 
+
+```{r}
+head( iris, )
+summary( iris )
+```
+
+
+## Operating on Factor Levels
+
+*Question:* What is the mean and variance in sepal length for each of the *Iris* species?
+
+:::{.fragment}
+The `by()` function allows us to perform some *function* on *data* based upon a grouping *index*.
+:::
+
+:::{.fragment}
+```{r}
+#| eval: false
+by( data, index, function )
+```
+:::
+
+
+## `by()` the 'Classic Approach'
+
+Here we can apply the function `mean()` to the data on sepal length using the species factor as a category.
+
+```{r}
+by( iris$Sepal.Length, iris$Species, mean)
+```
+
+
+## `by()`
+
+The same for estimating variance
+
+```{r}
+by( iris$Sepal.Length, iris$Species, var)
+```
+
+
+## `group_by()` the Tidy Way
+
+For a less "money sign" approach...
+
+```{r}
+#| message: false
+library( tidyverse )
+iris |>
+  group_by( Species) |>
+  summarize( Mean = mean(Sepal.Length),
+             Variance = var(Sepal.Length))
+```
+
+
+
+
+# Binomial Tests {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## The Binomial
+
+We have already seen the `binomial` distribution that is applicable for data that has 2-categories.
+
+$$
+P(K|N,p) = \frac{N!}{K!(N-K!)}p^K(1-p)^{N-K}
+$$
+
+## A Binomial Test
+
+$H_O: p = \hat{p}$
+
+<center>
+![](media/binomial_test.png){width="95%"}
+</center>
+
+## Example 
+
+Consider the following sampling of `catfish` from our hypothetical examples.
+
+```{r}
+#| echo: false
+fish_sample <- factor( sample( c(rep("Catfish",33), rep("Other",17)), size=50,replace=FALSE) )
+```
+
+```{r}
+fish_sample
+```
+
+::: {.fragment}
+```{r}
+fct_count( fish_sample )
+```
+:::
+
+
+## Statistical Test
+
+We could test the hypothesis that *The frequency of catfish in this sampling effort is not significantly different our previously observed frequency of 74%*.
+
+Formally, we would specify.
+
+$H_O: p = 0.74$
+
+and test it against the alternative hypothesis
+
+$H_A: p \ne 0.74$
+
+```{r}
+fit <- binom.test( x = 33, n = 50, p = 0.74)
+```
+
+
+## Interpretation {.smaller}
+
+```{r}
+fit
+```
+
+From this, we can see the following components:
+
+1.  The data consist of 33 catfish from a sample of size 50 (double check with data to make sure you didn't make a typo...),
+2.  The Probability associated with observing 33/50 if the `TRUE` frequency is $0.74$,
+3.  A 95% confidence interval on the probability itself,
+4.  The original frequency of success in the new data.
+
+## The Multinomial
+
+For completeness, this approach can be extended to data with more than two categroies using the *multinomial* distribution.
+
+$$
+P(X_1 = p_1, X_2 = p_2, \ldots, X_K = p_k|N) = \frac{N!}{\prod_{i=1}^{K}x_i!}\prod_{i=1}^Kp^{x_i}
+$$
+
+::: {.fragment}
+We will skip this for simplicity as there are other ways we can evaluate it.
+:::
+
+
+
+# Contingency Tables {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## Contingency Tables
+
+A *contingency table* is a method to determine if the count of the data we see in 2 or more categories conform to expectations based upon hypothesized frequencies.  Contingency tables use expectations based upon the $\chi^2$ distribution to evaluate statistical confidence.
+
+$$
+P(x) = \frac{1}{2^{k/2}\Gamma(k/2)}x^{k/2-1}e^{-x/2}
+$$
+<center>
+<font size="4">x = observed $\chi^2$ statistic; k = degrees of freedom, $\Gamma$ is the gamma function.</font>
+</center>
+
+## The Fish Data
+
+Thinking a bit differently, when we originally specified the *expectation* of the number of catfish, we only estimated $p_{catfish}$ and said $q = 1-p =\; not \; catfish$. For contingency tables, we use these as a the vector of probabilities and call this our *expected* frequencies.
+
+$$
+p = \left( \frac{37}{50}, \frac{13}{50} \right)  = (0.74,0.26)
+$$
+
+## More Generally
+
+We can use this as a *general* framework for 2 or more categories of observations.
+
+$$
+E = [E_1, E_2]
+$$
+
+If we had $K$ different species of fishes, it could similarily be expanded to something like:
+
+$$
+E = [E_1, E_2, \ldots, E_K]
+$$
+
+## Expecations as Counts
+
+This can be used to determine the expected number of observed values for any arbitrary sampling.  For example, if you sampled 172 fishes, you would expect the following proportions.
+
+```{r}
+p <- c( 37/50, 13/50)
+p * 172 -> Expected
+Expected
+```
+
+:::{.fragment}
+Which can be generalized as the vector of *Observed* data,
+
+$$
+O = [O_1, O_2]
+$$
+:::
+
+## A Test Statistic
+
+The test statistic here, $T$, is defined as the *standardized distance between observed and expected observations*.
+
+$$
+T = \sum_{i=1}^c \frac{(O_i - E_i)^2}{E_i}
+$$
+
+&nbsp;
+
+Which is distributed (with some assumptions) as a $\chi^2$ random variable.
+
+
+## Formal Testing {.smaller}
+
+$H_O: O = E$
+
+:::{.fragment}
+In `R`, we can test this using the `chisq.test()` function.
+
+```         
+chisq.test(x, y = NULL, correct = TRUE,
+           p = rep(1/length(x), length(x)), rescale.p = FALSE,
+           simulate.p.value = FALSE, B = 2000)
+```
+
+The salient points are:
+
+1.  The value of $x$, which is our observed data as a vector of counts.\
+2.  The expected frequencies (the $p_i$ values). If you look at he function above, if you do not specify values for $p$ it will assume the categories are expected in equal proportions (e.g., $p_1 = p_2 = \ldots = p_k$). This is not what we want, so we'll have to supply those expected proportions to the function directly.
+:::
+
+## Running the Test
+
+```{r}
+Fishes <- c(108,64)
+p <- c(0.74, 0.26)
+fit <- chisq.test(x=Fishes, p = p )
+```
+
+:::{.fragment}
+The function returns the result as a 'list-like' object which we can look at by printing it out.
+
+```{r}
+fit
+```
+:::
+
+
+## Two Categories of Factors {.smaller}
+
+We can expand this approach to two or more categorical data types.  Consider the following data data set in `R` for hair and eye colors collected in 1974 at the University of Delaware (n.b., this is a 3-dimensional matrix of observations):
+
+```{r}
+HairEyeColor
+```
+
+## Simplification
+
+For simplicity, I'm going to combine the 3rd dimension to produce a singel 4x4 matrix of observations.
+
+```{r}
+hairAndEye <- HairEyeColor[,,1] + HairEyeColor[,,2]
+hairAndEye
+```
+
+Assumptions:  
+1. Each row is a random sample relative to the column.  
+2. Each column is a random sample relative to the row.
+
+
+## Consequences {.smaller}
+
+```{r}
+hairAndEye[1,] -> x
+x
+```
+
+Is a random sample whose proportions
+
+```{r}
+x / sum(x)
+```
+
+are one sample from the larger set of data (remaining columns) whose proportions are:
+
+```{r}
+colSums( hairAndEye ) -> tot
+tot / sum(tot)
+```
+
+
+## Visual Description
+
+```{r}
+#| echo: false 
+data.frame( Color = c("Brown","Blue","Hazel","Green"),
+            Total = tot/sum(tot),
+            Row1 = x/sum(x) ) %>%
+  ggplot( aes(Total,Row1) ) + 
+  geom_point() + 
+  geom_abline(slope=1,intercept=0,col="red", lty=2) + 
+    geom_label_repel( aes(label=Color) ) +   
+  xlab("Fraction from Total Population") + 
+  ylab("Fraction from Row 1") +
+  theme_minimal() + 
+  xlim(c(0,1)) + 
+  ylim(c(0,1))
+```
+
+
+## Observations
+
+The raw data consists of a `matrix` of values.
+
+$$
+\begin{bmatrix}
+ O_{11} & O_{12} & \ldots & O_{1c} \\
+ O_{21} & O_{22} & \ldots & \vdots \\
+ \vdots & \vdots & \ddots & \vdots \\
+ O_{r1} & O_{r2} & \ldots & O_{rc}
+\end{bmatrix}
+$$
+
+## Row Marginals
+
+The factor represented by the row variable can be summed across all columns.
+
+$$
+R = 
+\begin{bmatrix}
+ R_{1} \\
+ R_{2} \\
+ \vdots \\
+ R_{r}
+\end{bmatrix}
+$$ 
+
+## Column Marginals {.smaller}
+
+And the data represented by the columns can be summed as:
+
+$$
+C = \begin{bmatrix}
+ C_{1} & C_{2} & \ldots & C_{c}
+\end{bmatrix}
+$$
+
+
+:::{.fragment}
+
+
+And the total number of observations, $N$, is given by
+
+$$
+N = \sum_{i=1}^r R_i 
+$$
+
+or 
+
+$$
+N = \sum_{j=1}^c{C_j}
+$$
+:::
+
+## The Null Hypothesis
+
+For contingency tables, we are assuming, under the null hypothesis, that the variables represented in counts of rows and columns are independent of each other.
+
+$H_O:$ The event 'an observation in row i' is independent of the event 'the same observation in column j' for all i and j.
+
+&nbsp;
+
+Or if we want to shorten it
+
+$H_O:$ Hair and eye colors are independent traits.
+
+## Deriving the Expectations
+
+The expected values for each row (*i*) and column (*j*) are estimated as:
+
+$$
+E_{i,j} = R_i * C_j / N
+$$
+
+
+## The Test Statistic
+
+Similar to the one-row example above, the test statistic for larger tables are the standardized differences between observed and expected values.
+
+$$
+T = \sum_{i=1}^r\sum_{j=1}^c\frac{(O_{ij} - E_{ij})^2}{E_{ij}}
+$$
+
+:::{.fragment}
+&nbsp;
+
+Which is evaluated against the $\chi^2$ distribution to ascertain statistical confidence.
+:::
+
+
+## Evaluating in `R`
+
+In `R`, it is slightly simplified as:
+
+```{r}
+fit <-  chisq.test(hairAndEye)
+```
+
+Which, as normal, returns a *list-*like response with all the data we need.
+
+
+## Interpretation
+
+It is a bit less *verbose* than other examples but has the needed information.
+
+```{r}
+fit
+```
+
+&nbsp;
+
+```{r}
+names(fit)
+```
+
+
+
+## Questions
+
+::: {layout-ncol="2"}
+If you have any questions, please feel free to either post them as an "Issue" on your copy of this GitHub Repository, post to the [Canvas](https://canvas.vcu.edu) discussion board for the class, or drop me an [email](mailto://rjdyer@vcu.edu).
+
+![](media/peter_sellers.gif){.middle fig-alt="Peter Sellers looking bored" fig-align="center" width="500"}
+:::

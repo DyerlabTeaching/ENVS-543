@@ -12,7 +12,7 @@ suppressMessages( library( tidyverse ) )
 library( ggrepel )
 ```
 
-## Discrete States - The Factor
+## Discrete Data
 
 > Factors allow us to represent a type of data that exclusive and categorical. These data may, or may not, be ordered and in most cases, we can think of these kinds of data to represent things like, treatment levels, sampling locations, etc.
 
@@ -283,7 +283,7 @@ iris %>%
 
 But if you like the `by()` appraoch, go for it!
 
-## Missing Data
+### Missing Data
 
 Missing data is a <font color="red">fact of life</font> and `R` is very opinionated about how it handles missing values. In general, missing data is encoded as `NA` and is a valid entry for any data type (character, numeric, logical, factor, etc.). Where this becomes tricky is when we are doing operations on data that has missing values. `R` could take two routes:
 
@@ -302,7 +302,7 @@ summary( missingIris )
 
 Notice how the missing data is denoted in the summary.
 
-### Indications of Missing Data
+#### Indications of Missing Data
 
 When we perform a mathematical or statistical operation on data that has missing elements `R` will **always** return `NA` as the result.
 
@@ -318,7 +318,7 @@ Same output for using `by()`, it will put `NA` into each level that has at least
 by( missingIris$Petal.Width, missingIris$Species, mean )
 ```
 
-### Working with Missing Data
+#### Working with Missing Data
 
 To acknowledge that there are missing data and you still want the values, you need to tell the function you are using that data is missing and you are OK with that using the optional argument `na.rm=TRUE` (`na` = missing data & `rm` is *remove*).
 
@@ -346,11 +346,11 @@ $$
 P(K|N,p) = \frac{N!}{K!(N-K!)}p^K(1-p)^{N-K}
 $$
 
-assuming that the likelihood of observing a single instance of $K$ is given by the probability $p$ (and not $K$ is $1-p$). While this is the probability function associated with the binomial distibution, we also have a similar statistical test of the data under the binomial.
+assuming that the likelihood of observing a single instance of $K$ is given by the probability $p$ (and not $K$ is $1-p$). While this is the probability function associated with the binomial distribution, we also have a similar statistical test of the data under the binomial.
 
 To apply a binomial test, we are essentially testing the hypothesis $H_O: p = \hat{p}$, that is that the hypothesized $p$ is equal to the specified value.
 
-From the catfish example, remember that we found an estimate of $p$ to be roughtly $0.74$. If we were to go out and do another sampling session and this time, from a sample of 50 fish, get the following (made up but relevant data)
+From the catfish example, remember that we found an estimate of $p$ to be roughly $0.74$. If we were to go out and do another sampling session and this time, from a sample of 50 fish, get the following (made up but relevant data)
 
 ```{r}
 #| echo: false
@@ -392,7 +392,7 @@ fit
 From this, we can see the following components:
 
 1.  The data consist of 33 catfish from a sample of size 50 (double check with data to make sure you didn't make a typo...),
-2.  The Probability associated with observing 33/50 if the `TRUE` frequency is $0.74$,
+2.  The Probability associated with observing 33/50 if  `TRUE` frequency is $0.74$,
 3.  A 95% confidence interval on the probability itself,
 4.  The original frequency of success in the new data.
 
@@ -410,11 +410,7 @@ We are not going to really play around with this expansion much as it requires a
 
 ## Contingency Tables
 
-This is a much more commonly used approach for when we have either univariate data or have predicted and response variables that are both discrete categorical data.
-
-## A Single Response Variable
-
-Just like in the binomial multinomial examples, we can use a contingency table analysis to determine if the proportions of observations in each category are the same. Let's assume, using the data we collected in the catfish where we found 37 catfish in a sample of 50 fishes.
+This is a much more commonly used approach for when we have either univariate data or have predicted and response variables that are both discrete categorical data.  Just like in the binomial multinomial examples, we can use a contingency table analysis to determine if the proportions of observations in each category are the same. Let's assume, using the data we collected in the catfish where we found 37 catfish in a sample of 50 fishes.
 
 Instead of just talking about the probability of catfish, lets talk about the probability of both catfish and not catfish as a short vector of individual probabilities.
 
@@ -442,7 +438,7 @@ $$
 O = [108, 64]
 $$
 
-Is the fraction of observations in the observed set distruibuted as expected given the proportions in the expectation? The NULL hypothesis for this test is that the probability of fish is catfish is equal to the expected fraction of catfish (or more stodgely as:)
+Is the fraction of observations in the observed set distributed as expected given the proportions in the expectation? The NULL hypothesis for this test is that the probability of fish is catfish is equal to the expected fraction of catfish (or more stodgely as:)
 
 $H_O: P(X\;in\;j) = p_j$
 
@@ -465,7 +461,7 @@ chisq.test(x, y = NULL, correct = TRUE,
 The salient points are:
 
 1.  The value of $x$, which is our observed data as a vector of counts.\
-2.  The expected frequncies (the $p_i$ values). If you look at he function above, if you do not specify values for $p$ it will assume the categories are expected in equal proportions (e.g., $p_1 = p_2 = \ldots = p_k$). This is not what we want, so we'll have to supply those expected proportions to the function directly.
+2.  The expected freqeuncies (the $p_i$ values). If you look at he function above, if you do not specify values for $p$ it will assume the categories are expected in equal proportions (e.g., $p_1 = p_2 = \ldots = p_k$). This is not what we want, so we'll have to supply those expected proportions to the function directly.
 
 ```{r}
 Fishes <- c(108,64)
@@ -481,11 +477,11 @@ fit
 
 Given the results, the P-value is quite small. This suggests that the likelihood of the condition stated in the NULL hypothesis (e.g., that the observed counts of fish are coincident with those given by $p$) is unlikely. In this case, we would reject the null hypothesis.
 
-This approch can be generalized to any arbitrary number of categories using the same rationalle and code. So if we were sampling catfish, gizzard shad, and crappy, we'd have vectors with 3 elements in them instead of just two.
+This approach can be generalized to any arbitrary number of categories using the same rationale and code. So if we were sampling catfish, gizzard shad, and crappy, we'd have vectors with 3 elements in them instead of just two.
 
 ### Rows & Columns
 
-In general, we have two set of data here (I sometimes call them predictor and response but they can also be just two categories of data that have discrete types). I'm going to use some built-in data with hair and eye colors in `R` that was sampled from the University of Deleware in 1974 (hey, just like the motor trends data, it must have been a classic year for datasets to be put in stats packages...).
+In general, we have two set of data here (I sometimes call them predictor and response but they can also be just two categories of data that have discrete types). I'm going to use some built-in data with hair and eye colors in `R` that was sampled from the University of Delaware in 1974 (hey, just like the motor trends data, it must have been a classic year for data sets to be put in stats packages...).
 
 By default, the data are split by reported sex. The raw data look like this:
 
@@ -500,9 +496,7 @@ hairAndEye <- HairEyeColor[,,1] + HairEyeColor[,,2]
 hairAndEye
 ```
 
-So the raw data are observations on two categories of traits, hair and eye, of which an individual is unambiguously assigned to one designation... totally irrational I know, but let's just roll with it.
-
-The rationalle here is that the two traits are independent. This means that:
+The rationale for the underlying statatical test is that the two traits are independent. This means that:
 
 1.  Each row can be considered a random sample of eye colors from the background population that is independent of the hair color.
 2.  Each column of the data should be a random sample of hair colors from the background population which is independent of the eye color.
@@ -520,7 +514,7 @@ The proportions of individuals in each eye color in this hair category are given
 x / sum(x)
 ```
 
-And if hair and eye color are truely independent of each other then we should expect that these proportions should roughly be equal to that if we look at the eye colors for all rows (there is a `rowSums` and `colSums` function that does just what you think it should do). In this case, if individuals in the first row of the data are from the same population as everyone else, then the total counts in the data
+And if hair and eye color are truly independent of each other then we should expect that these proportions should roughly be equal to that if we look at the eye colors for all rows (there is a `rowSums` and `colSums` function that does just what you think it should do). In this case, if individuals in the first row of the data are from the same population as everyone else, then the total counts in the data
 
 ```{r}
 colSums( hairAndEye ) -> tot
@@ -572,7 +566,9 @@ $$
  \vdots \\
  R_{r}
 \end{bmatrix}
-$$ And the columns can be summed to produce the column totals
+$$ 
+
+And the columns can be summed to produce the column totals
 
 $$
 \begin{bmatrix}
