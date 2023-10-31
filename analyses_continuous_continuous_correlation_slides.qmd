@@ -1,0 +1,578 @@
+---
+title: "Models of Correlation"
+subtitle: "Coincident change in pairs of variables"
+author: Rodney Dyer, PhD
+format: revealjs
+---
+
+
+## &nbsp;
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library( tidyverse )
+library( fontawesome )
+theme_set( theme_minimal( base_size = 16))
+```
+
+> ### Correlation is a condition that indicates the extent to which two variables change in a coordinate fashion.  <br/>&nbsp;<br/> This <font color="red">does not</font> imply they are functionally linked or causal in nature.
+
+
+
+# Background {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## Americas Theatrical Treasure...
+
+![Mr. Nicolas Cage](https://live.staticflickr.com/65535/53300150155_7d00986000_o_d.png)
+
+
+
+## Example Data {.scrollable}
+
+```{r}
+#| echo: true
+tibble( Year = 1999:2009, 
+        `Nicolas Cage Movies` = c( 2, 2, 2, 3, 
+                                   1, 1, 2, 3, 
+                                   4, 1, 4),
+        `Drowning Deaths in Pools` = c( 109, 102, 102, 
+                                        98, 85, 95, 
+                                        96, 98, 123, 
+                                        94, 102 )) -> df
+
+```
+
+## Example Data
+
+```{r}
+head(df)
+```
+
+
+
+
+
+## The Raw Data
+
+```{r}
+library( reshape2 )
+df %>%
+  melt( id = "Year" ) %>%
+  ggplot( aes( Year, value, color = variable) ) + 
+  geom_line()  +  geom_point()  + 
+  theme( legend.position = "top",legend.title = element_blank() )
+```
+
+
+## Simultaneous Changes ?
+
+```{r}
+df %>%
+  ggplot( aes(`Nicolas Cage Movies`, `Drowning Deaths in Pools` ) ) +
+  geom_point() + stat_smooth( formula=y ~ x, method='lm', se=FALSE, color = "red", size = 0.5) +
+  geom_text( aes(x=1.5, y=115, label = paste( "Correlation = ", format( cor(df[,2],df[,3]), digits=3) ) ), size=6 )
+```
+
+## The Correlation Test
+
+Testing for *coincident changes* in both sets of data.
+
+```{r}
+#| echo: true
+cor.test( df$`Nicolas Cage Movies`, 
+          df$`Drowning Deaths in Pools`)
+```
+
+
+
+
+
+
+# New Data Set `r fa("beer", fill='#FDD545'  )` {background-color="#eee" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+
+
+
+
+## Beer Judge Certification Program {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Recognized Beer Styles
+
+- 100 Distinct Styles (not just IPA's & that yellow American Corn Lager!)  
+
+- Global & Regional Styles
+
+- Quantitative Characteristics
+  - IBU, SRM, ABV, OG, FG
+  
+- Qualitative Characteristics 
+  - Overall Impression, Aroma, Appearance, Flavor, & Mouthfeel
+:::
+
+::: {.column width="50%"}
+![](https://live.staticflickr.com/65535/50570218057_8a1887e597_w_d.jpg)
+:::
+
+::::
+
+
+
+&nbsp; 
+
+The [BJCP Style Guidelines](https://bjcp.org/stylecenter.php) exist for beer, mead, and ciders.
+
+
+## Basic Yeast Types
+
+
+![](https://live.staticflickr.com/65535/50569334528_f5152c320b_c_d.jpg)
+
+&nbsp;
+
+&nbsp;
+
+Not including sour beers, which use yeast and bacteria mixtures.
+
+
+
+## Dissolved Sugars - OG & FG
+
+:::: {.columns}
+
+::: {.column width="50%"}
+The more sugar in the wort, the more food for the yeast to work on, and the more alcohol that may be produced.
+
+The difference between the gravities before and after fermentation can be used to estimate ABV.
+:::
+
+::: {.column width="50%"}
+
+&nbsp;
+
+![](https://live.staticflickr.com/65535/50570081896_82bacc922e_w_d.jpg)
+:::
+
+::::
+
+
+
+
+## Bitterness
+
+Bitterness is created by the addition of herbs.
+
+
+![](https://live.staticflickr.com/65535/50569334583_3f3bbae387_w_d.jpg)
+
+
+
+## Color
+
+The color of the beer is quantified using the Standard Reference Method (SRM) scale.
+
+
+![](https://live.staticflickr.com/65535/50570214697_6a57066d3b_w_d.jpg)
+
+
+## The Data
+
+Here are the raw characteristic data for the different styles.
+
+```{r}
+beer_url <- "https://raw.githubusercontent.com/dyerlab/ENVS-Lectures/master/data/Beer_Styles.csv"
+read_csv( beer_url ) %>%
+  mutate( Yeast = factor(Yeast) ) -> beer
+summary( beer )
+```
+
+
+
+## Field Trip!    
+
+
+Plenty of options in the RVA!
+
+
+
+# Specifics About Statistics {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## Greek vs. Non-Greek 
+
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Parameter
+
+Estimating the real value created by the the **entire** population of entities.  
+
+- Mean of the `real` population, $\mu$.
+
+- Variance of the `real` population, $\sigma^2$
+:::
+
+::: {.column width="50%"}
+:::{.fragment}
+### Estimators
+
+The values we get by **sampling** from the much larger population to gain inferences
+
+- Sample mean, $\bar{x}$  
+
+- Sample variance, $s^2$
+:::
+:::
+
+::::
+
+
+
+
+## Parametric Assumptions
+
+Much of the way we determine the significance of a model is based upon *assumptions* of the underlying data.
+
+- Normality  
+
+- Independence  
+
+- Homoscedasticity
+
+
+
+## Normality
+
+In general, data we work with is assumed to follow a Normal distribution with parameters $\mu$ and $\sigma$, often denoted as $N(\mu,\sigma)$,  (like you did with `rnorm(mu,sd)` in a previous homework) which can be parameterized as: 
+
+&nbsp;
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$$
+f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x - \mu}{\sigma})}
+$$
+:::
+
+::: {.column width="50%"}
+
+```{r echo=FALSE}
+N <- 1000
+data.frame( Distribution = rep(c("N(0,1)","N(10,1)", "N(0,5)"), each=N ),
+            Data = c( rnorm(N,0,1),
+                      rnorm(N,10,1),
+                      rnorm(N,0,5) ) ) %>%
+  ggplot( aes( Data ) ) + 
+  geom_histogram( alpha=0.75, 
+                  bins = 50) + 
+  facet_grid(Distribution ~.)
+```
+
+:::
+
+::::
+
+
+
+## Testing for Normality - Visualization
+
+Visualizing the 'normality' of the data using built-in functions.
+
+```{r}
+#| echo: true
+qqnorm( beer$ABV_Min )
+qqline( beer$ABV_Min, col="red")
+```
+
+
+
+## Testing for Normality 
+
+The Shapiro-Wilk test for normality has the null hypothesis $H_O: Data\;are\;normal$, using the `W` statistic.
+
+&nbsp;
+
+$W = \frac{\left(\sum_{i=1}^Na_iR_{x_i}\right)^2}{\sum_{i=1}^N(x_i - \bar{x})^2}$ 
+
+&nbsp;
+
+where $N$ is the number of samples, $a_i$ is a standardizing coeeficient, $x_i$ is the $i^{th}$ value of $x$, $\bar{x}$ is the mean of the observed values, and $R_{x_i}$ is the rank of the $x_i^{th}$ observation.
+
+
+## Shapiro Wilkes Test
+
+The default test for this in `R` is performed by the `shapiro.test()` function.  Here, we will look at the minimum ABV value from the beer dataset.
+
+
+```{r}
+#| echo: true
+shapiro.test( beer$ABV_Min )
+```
+
+:::{.fragment}
+Is Minimum ABV Normal?
+:::
+
+
+##  Data Transformations 
+
+### ArcSin Square Root
+
+Fractions and Percentages are known  to behave poorly, particularly around the edges (e.g., close to 0 or 1).  It is not uncommon to use a simple ArcSin Square Root transformation to try to help fractional data.
+
+```{r}
+#| echo: true
+abv <- beer$ABV_Min / 100.0
+asin( sqrt( abv ) ) -> abv.1
+shapiro.test( abv.1)
+```
+
+:::{.fragment}
+Conclusion? Are these data normal?
+:::
+
+
+## Data Transformations - Box Cox
+
+There is a family of transformations that can be used to see if we can help data sets tend towards normality for parametric analyses.
+
+$$
+\tilde{x} = \frac{x^\lambda - 1}{\lambda}
+$$
+
+
+
+## Data Transformations - Box Cox
+
+```{r}
+#| echo: true
+test_boxcox <- function( x, lambdas = seq(-1.1, 1.1, by = 0.015) ) {
+  ret <- data.frame( Lambda = lambdas,
+                     W = NA,
+                     P = NA)
+  
+  for( lambda in lambdas ) {
+    x.tilde <- (x^lambda - 1) / lambda   
+    w <- shapiro.test( x.tilde )
+    ret$W[ ret$Lambda == lambda ] <- w$statistic
+    ret$P[ ret$Lambda == lambda ] <- w$p.value
+  }
+  
+  return( ret )
+}
+```
+
+
+## Data Transformations - Box Cox
+
+```{r}
+#| echo: true
+vals <- test_boxcox( beer$ABV_Min ) 
+vals %>% ggplot( aes(Lambda, P) ) + geom_line()
+```
+
+
+
+
+## Equality of Variance
+
+It is assumed that the variance of the data are 
+
+```{r echo=FALSE}
+df <- data.frame( x = c(1, 1, 5, 5, 1), 
+                  y = c(3, 4, 8, 1, 3) )
+ggplot( df ) + 
+  geom_polygon( aes(x,y), fill="gray", alpha=0.75 ) +
+  xlab("") + ylab("")
+```
+
+
+## Independence of Data
+
+:::: {.columns}
+
+::: {.column width="50%"}
+The samples you collect, and the way that you design your experiments are most important to ensure that your data are individually independent.  You need to think about this very carefully as you design your experiments.
+:::
+
+::: {.column width="50%"}
+![](https://live.staticflickr.com/65535/50582673933_4db6638924_w_d.jpg)
+:::
+
+::::
+
+
+
+# Correlation Models {background-color="black" background-image="media/contour.png" background-size="initial" background-position="right"}
+
+
+## Parametric Correlation
+
+### The Pearson Product Moment Correlation
+
+&nbsp;
+
+$\rho = \frac{\sum_{i=1}^N(x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^N(x_i - \bar{x})^2}\sqrt{\sum_{i=1}^N(y_i - \bar{y})^2}}$
+
+&nbsp;
+
+whose values are confined to be within the range $-1.0 \le \rho \le +1.0$
+
+&nbsp;
+
+:::{.fragment}
+Whose significance is tested by using a variant of the `t.test`:
+
+$t = r \frac{N-1}{1-r^2}$
+:::
+
+
+## Visual Examples
+
+![*Figure 1: Data and associated correlation statistics.*](https://live.staticflickr.com/65535/50569436828_a110515a21_c_d.jpg)
+
+
+
+
+
+## The Correlation Test 
+
+As we've used several times so far, the `cor.test()` function performs simple correlation analysis, with a deafult Pearson Product Moment analysis.
+
+```{r}
+#| echo: true
+cor.test( beer$OG_Max, beer$FG_Max ) -> OG.FG.pearson
+ OG.FG.pearson
+```
+
+
+## The Correlation Test
+
+Again, the object that is returned is a `list` and has these components.
+
+```{r}
+#| echo: true
+names( OG.FG.pearson )
+```
+
+
+
+## Non-Parametric Correlation - Spearman's Rho
+
+To alleviate some of the underlying *parametric assumptions*, we can use ranks of the data instead of the raw data directly.  
+
+
+$\rho_{Spearman} = \frac{ \sum_{i=1}^N(R_{x_i} - \bar{R_{x}})(R_{y_i} - \bar{R_{y}})}{\sqrt{\sum_{i=1}^N(R_{x_i} - \bar{R_{x}})^2}\sqrt{\sum_{i=1}^N(R_{y_i} - \bar{R_{y}})^2}}$
+
+
+## Non-Parametric Correlation - Spearman's Rho
+```{r}
+#| echo: true
+OG.FG.spearman <- cor.test( beer$OG_Max, beer$FG_Max, 
+                            method = "spearman" )
+OG.FG.spearman
+```
+
+
+
+## Permutation for Significance.
+
+Another way to circumvent some of the constraints based upon the form of the data, we can use permutation to test significance.
+
+$H_O: \rho = 0$
+
+
+## Setting up Permutations
+
+Permutation requires that we do some simple simulation work, permuting the data **assuming** the Null Hypothesis is *TRUE*.
+
+&nbsp;
+
+```{r}
+#| echo: true
+x <- beer$OG_Max
+y <- beer$FG_Max
+df <- data.frame( Estimate = factor( c( "Original",
+                                        rep("Permuted", 999))), 
+                  rho =  c( cor.test( x, y )$estimate,
+                            rep(NA, 999)) )
+
+```
+
+## Setting Up the Permutation
+
+&nbsp;
+
+```{r}
+#| echo: true
+head( df )
+```
+
+
+
+
+## Permuting "Under the Null"
+
+Now, we can go through the 999 `NA` values we put into that data frame and:  
+1. Permute one of the variables  
+2. Run the analysis    
+3. Store the statistic.  
+
+
+## Permuting "Under the Null"
+
+Shuffle the `y` variable and recalculate the test statistic 999 times.  
+
+```{r}
+#| echo: true
+for( i in 2:1000) {
+  yhat <- sample( y,   # this shuffles the data in y
+                  size = length(y), 
+                  replace = FALSE)
+  model <- cor.test( x, yhat )
+  df$rho[i] <- model$estimate 
+}
+```
+
+
+
+
+## Visualizing the NULL
+
+Probability of a value as extreme or greater than the original estimate $\to$ P-value.
+
+```{r fig.height=5}
+#| echo: true
+ggplot( df ) + 
+  geom_histogram( aes(rho, fill=Estimate ) )
+```
+
+
+
+## Conclusions
+
+Measures of correlation determine the co-movement of two variables **without** making any statement regarding causation.
+
+1. Parametric methods dependent upon normality.  
+2. Transformations are available.
+3. Non-Parametric & Permutation approaches for more *difficult* data.
+
+
+
+
+
+## Questions
+
+::: {layout-ncol="2"}
+If you have any questions, please feel free to post to the [Canvas](https://canvas.vcu.edu) discussion board for the class or drop me an [email](mailto://rjdyer@vcu.edu).
+
+![](media/peter_sellers.gif){.middle fig-alt="Peter Sellers looking bored" fig-align="center" width="500"}
+:::
