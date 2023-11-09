@@ -75,7 +75,7 @@ Applying statistical models to make biological inferences.
 |                             |                                                                                                                                                        |
 |                             | [Regression Slides](analyses_continuous_continuous_regression_slides.html), [Regression Narrative](analyses_continuous_continuous_regression.html)     |
 +-----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Categorical\~f(Continuous)  |                                                                                                                                                        |
+| Categorical\~f(Categorical) |                                                                                                                                                        |
 +-----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ### GeoSpatial Analyses
