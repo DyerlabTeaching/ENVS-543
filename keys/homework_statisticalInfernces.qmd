@@ -1,0 +1,197 @@
+---
+title: "Statistical Confidence"
+subtitle: "Different Ways of Gaining Inferences"
+author: "Key"
+execute: 
+  echo: false
+---
+
+```{r}
+#| message: false 
+options( tidyverse.quiet = TRUE )
+options(dplyr.summarise.inform = FALSE)
+options( digits = 3 )
+library( readr )
+library( dplyr ) 
+library( leaflet )
+library( tidyverse )
+```
+
+## Background
+
+In the lecture component, we discussed the differences between Frequentist Inferences and those that fall under a Bayesian inference. As a brief reminder,
+
+Frequentist approaches assume:
+
+-   There is an *underlying population* from which we are sampling.
+-   Sampling intensity allows us to estimate parameters that tend towards this *unknowable* real value.
+-   Decisions, as made by testing specific hypotheses, have strict boundaries (think $\alpha$-value, etc.).
+-   There is an underlying distribution (parametric) or ways of iterating through all possible outcomes (non-parametric) that we use to make inferences about the *likelihood* of an observation (e.g., t-distribution, $\chi^2$-distribution, etc.).
+
+Bayesians assume:
+
+-   We have no idea about the real values but any *prior* inferences should be included in the analysis.
+-   We should be able to define a *generative* model that reasonably approximates how the underlying system works.
+-   Focus is not on estimating a single parameter but on deriving the *confidence writ large* that we have in some outcome.
+-   More data is better.
+
+## Applying Both Approaches
+
+For this in-class activity, we will be using the *Araptus attenuatus* beetle data we looked at way back in the discussion on [Data Containers](https://dyerlabteaching.github.io/ENVS543-Fall_2023/data_containers_slides.html).
+
+![The enigmatic sonoran desert euphorb bark beetle, *Araptus attenuatus* (not to scale).](https://live.staticflickr.com/65535/53265526303_a38d76cef9_o_d.png){#fig-beetle}
+
+```{r}
+url <- "https://raw.githubusercontent.com/DyerlabTeaching/ENVS543-Fall_2023/main/data/arapat_full.csv"
+read_csv( url, show_col_types = FALSE ) -> arapat
+```
+
+These data consist of `r nrow(arapat)` sites (see map below) that were sampled of the beetle from 10 host plants and the sex of all randomly sampled individuals was recorded as was the coordinates for the site and a measure of *habitat suitability* based upon ecological niche modeling (see Dr. McGarvey's course on this topic-it is awesome!).
+
+```{r}
+#| echo: false 
+#| fig-cap: "Map of Araptus attenuatus locations throughout the Sonoran Desert. The site name is given in the popup for each locale and the size of the marker is defined as the ratio of Male:Female beetles at each locale."
+#| label: fig-map
+arapat %>%
+  mutate( MFRatio = Males/Females * 4) %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers( ~Longitude, ~Latitude, popup=~Stratum, radius=~MFRatio, color="red", fillOpacity=0.75 )
+```
+
+## Activity
+
+I would like you to use these data to make some inferences using both a Frequentist Approach (via a `t-test`) and a Bayesian approach (using the binomial). But first, let's generate some understanding of the data.
+
+We are going to use the sex ratio of this organism as a proxy for how animals choose where to live. The life history of this organism is one that male beetles colonize new habitat and try to attract females to them. If habitat quality does not impact the ability of a female beetle to decide where to go, then we'd expect there to be no relationship between habitat suitability (in our measure larger numbers are better). Conversely, if there is an impact by habitate and female beetles are actively choosing where to go, then it should be evident in this relationship.
+
+*Create a variable in the data that represents the reproductive sex ratio in this species at each locale. Using words, describe how you did it as if you were writing a sentence or two in a 'Methods section' of a paper.*
+
+To standardize across variable sample sizes, I created a ratio of Male/Female census sizes in each habitat.
+
+```{r}
+arapat |> 
+  mutate( Ratio = Males/Females ) -> arapat 
+```
+
+*Visualize this ratio using a plot to evaluate the relationship of sex ratio with habitat suitability.*
+
+```{r}
+#| fig-cap: "Sex ratio as a function of habitat suitablilty for the Sonoran Desert bark beetle, *Araptus attenuatus*."
+#| message: false
+arapat |>
+  ggplot( aes( x = Suitability, y = Ratio) ) + 
+  geom_point() + 
+  stat_smooth( se=FALSE) + 
+  ylab("Ratio of Male:Female Animals")  + 
+  xlab("Habitat Suitability")
+```
+
+*In your own words, interpret this relationship. Is there a trend? Is it linear or non-linear?*
+
+There appears to be a trend in lower quality habitat where there are more males than female individuals. This trend decreases until habitat suitability is 25% and then levels off with equal sex-ratios.
+
+
+### A Frequentist Inference
+
+A recent graduate student was interested in looking at sex ratio as a proxy for dispersal. If male individuals are sessile because they have established at a site, then any changes in sex-ratio should be from female preference and potentially differential dispersal ability. Their hypothesis was that for marginal habitat (e.g., that where suitability was less than 0.25), observed sex ratios should be skewed from 1:1.
+
+*Use the sample of sites with marginal habitat and test them under the hypothesis that the average sex ratio* $H_O: \mu = 1.0$ and interpret the results in textual format using the statistical output.
+
+```{r}
+arapat |> 
+  filter( Suitability < 0.25 ) |>
+  select( Ratio ) |> 
+  t.test( mu = 1.0 ) -> fit.ttest
+```
+
+Sex ratios were examined using a one-sample Students t-test for all sites with habitat suitability measured as less than 0.25 to examine the hypothesis of equal sex ratios.  Analysis showed significantly biased (upwards) sex ratios (t-test; t = `r fit.ttest$statistic`, df = `r fit.ttest$parameter`, P = `r fit.ttest$p.value`).
+
+*How deviant does the observed sex ratio have to be before we reject the Null Hypothesis given this output?*
+
+Rejecting the null hypothesis is based upon both the biological consequences of failure to reject and the underlying assumptions and impacts of the model.  In this case, we could assume that something that happends 1% of the time (see the p-value above) is rare enough to consider it biologically important.  Historically, we've used a rejection rate of 5% for simplicity in teaching, though it has little biological backing.  For our purposes here, I am going to assume that the data we see is unlikely enough that we will want to move on and look at what is causing the bias in the underlying sex ratios at locations with low habitat suitability.
+
+### A Bayesian Inference
+
+Here we want to know more about how variable the sex ratio can be and still *appear* to be even. We will adopt a Bayesian approach to this one that is similar to that we demonstrated in the catfish example.
+
+On average, there are 48 samples (male and female beetles total) per site and produce a sex ratio as you defined above. Let's change this to a probability of sampling a single sex of beetle (your choice) by creating a new column of data that is the probability of selecting $P(x|data) = N_x/(N_x + N_y)$.
+
+*Define the probability of randomly selecting one of the sexes for each locale in the data set and then examine the distribution of these probabilities across all sites. What does it look like?*
+
+```{r}
+arapat |>
+  mutate( Prob = Males / ( Males + Females) ) -> arapat 
+```
+
+*What is the mean of this distribution? And what is the standard deviation? Create these variables and we can use them as input into a prior probability model as follows.*
+
+If I found that the mean probability was $\mu = 0.72$ and the standard deviation was $\sigma = 0.08$, I could pull random numbers from a normal random distribution as:
+
+```{r}
+mu <- 0.72 
+sd <- 0.08 
+prior <- rnorm(1,mean=mu, sd=sd)
+prior
+```
+
+No, you define the values of `mu` and `sd` from the data.
+
+```{r}
+meanProb <- mean( arapat$Prob )
+sdProb <- sd( arapat$Prob )
+```
+
+Now, we have prior data input into our model. Let's define the underlying generative model. Here the likelihood of male and female is defined in the priors and since there are only two mutually exclusive conditions, this is just what a Binomial Model does---lucky for us!
+
+So, in the previous example, we had a *hypothetical* prior of $p_{prior} =$ `r format(prior,digits=4)`. Using the binomial model, we could find a random sample with this prior for some hypothetical sampling session of 50 beetles to find the number of one sex as:
+
+```{r}
+rbinom(n=1,size=50, prob=prior) -> num
+num
+```
+
+Meaning that if the true probability of one sex in the data is $p_{prior} =$ `r format(prior,digits=4)`, then under these situations, we should be able to sample real populations and find `r num` of the identified sex.
+
+So let's look at the confidence we have now, given our observed data, on the value of the sex ratio. Let's examine the sites we have that are in the *marginal habitat*.
+
+*What is the expected number of individuals in marginal habitats for the specific sex IF the sample size was 50?*
+
+```{r}
+arapat |> 
+  filter( Suitability < 0.25 ) |>
+  summarize( `Expected Males` = mean(  Prob ) * 50 ) -> numExpected
+```
+
+In marginal habitats we would expect to see `r numExpected[1,1]` male individuals in a random sample of size 50.
+
+*Create a vector of random priors as we did above but this one has 10,000 random values instead of one.*
+
+```{r}
+priorsX <- rnorm( 10000, mean = meanProb, sd = sdProb )
+```
+
+*Create another vector that has the expected number of observed individuals with each of these priors.*
+
+```{r}
+expectedObs <- rbinom(10000, size = 50, prob = priorsX )
+```
+
+*Put these together into a data.frame and figure out what prior probabilities can produce the number of individuals you identified as the targeted sex in the marginal habitat. Does this contain 1.0? What does this say about the sex ratios from the marginal habitats you saw in the real world?*
+
+```{r}
+#| message: false 
+data.frame( priorsX, expectedObs) |> 
+  filter( expectedObs == 30 ) -> tmp 
+
+tmp |> 
+  ggplot( aes( priorsX )) + 
+  geom_histogram() + 
+  theme_minimal() + 
+  xlab("P(Male) Priors") + 
+  ylab("Frequency")
+```
+
+The distribution of `P(Male)` values shows that it is skewed towards an excess of male individuals.  If it were equal sex ratios, the mean of the distribution would be centered on 0.5, whereas the observed output is suggests that the center of this distribution is `r mean(tmp$priorsX)`.  The results suggest that the range of sex bias in these marginal habitats. 
+
+

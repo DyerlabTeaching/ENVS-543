@@ -1,0 +1,112 @@
+---
+title: "Discrete Data Homework"
+author: "KEy"
+description: |
+  This is the key to the homework on Discrete Data.
+---
+
+## Discrete Data
+
+In this assignment, we'll be going back to our old friend, the Rice Rivers Center Data set. Here is the connection URL.
+
+```{r}
+#| message: false
+library( tidyverse )
+options( tidyverse.quiet = TRUE )
+options(dplyr.summarise.inform = FALSE)
+url <- "https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/pub?gid=0&single=true&output=csv"
+```
+
+Discrete data is counting items. For this exercise, we will use the date of the record in the Rice data set to be our discrete variable. Actually, we will use the Month and Day of the Week for the Date so get ready for doing those *mutations*. So before we get going, load in the data and make a Day of the Week column and a Month column. There are several ways to get the data into the format we need, you may find one or more of `day()`, `matrix()`, `table()`, `wday()`, and `yday()`to helpful\...
+
+```{r}
+#| message: false 
+library( lubridate )
+read_csv( url ) |> 
+  mutate( Date = mdy_hms( DateTime) ) |> 
+  mutate( Day = day( Date ) ) |> 
+  mutate( Weekday = weekdays( Date, abbreviate = FALSE) ) |>
+  mutate( Month = month( Date, abbr = FALSE, label=TRUE ) ) |>
+  mutate( Weekday = factor( Weekday, 
+                        ordered=TRUE,
+                        levels = c( "Monday", "Tuesday", "Wednesday", 
+                                    "Thursday","Friday","Saturday","Sunday")) ) |> 
+  droplevels() |> 
+  select( -DateTime ) |>
+  mutate( Precipitation = Rain_in * 2.54) |>
+  mutate( Temperature = (AirTempF - 32) * 5 / 9 ) |> 
+  select( Date, Month, Day, Weekday, Precipitation, Temperature) -> rice
+summary( rice )
+```
+
+
+
+1.  Use a contingency table to determine if temperatures in February that are below freezing are more frequent for any particular day of the week (e.g., test the hypothesis $H_O:$ *Freezing temperatures are independent of day of the week.*)
+
+```{r}
+rice |> 
+  filter( Month == "February") |>
+  group_by( Weekday, Day ) |> 
+  summarise( didFreeze = any( Temperature < 0.0 ) ) |>
+  filter( didFreeze == TRUE ) -> freezingDays
+```
+
+The days that had freezing on them were:
+```{r}
+table(freezingDays$Weekday)
+```
+
+and if we test to see if there was any bias in the day of the week, we pass this numerical vector to the `chisq.test()` function.
+
+```{r}
+fit <- chisq.test( table( freezingDays$Weekday) )
+fit
+```
+
+And we can conclude that there is no bias in the days that have at least one freezing temperature in them.
+
+
+
+2.  Do a similar analysis for rain in the month of February. Count the days that had some amount of rain and group them by weekday. Note: the grouping should be by the whole day, if you have \>0 rain during the calendar day, then count it as a day that rained.
+
+Similarily, we can find this as:
+
+```{r}
+rice |> 
+  filter( Month == "February") |> 
+  group_by( Weekday, Day ) |> 
+  summarize( hadRain = any(Precipitation > 0 )) |> 
+  filter( hadRain == TRUE ) -> rainyDays
+```
+
+```{r}
+table(rainyDays$Weekday)
+```
+
+```{r}
+chisq.test( table( rainyDays$Weekday ) )
+```
+
+And again, it does not appear to be biased by the day of the week.
+
+
+3.  Now expand this to also look at Month as a factor in addition to the weekday in a 2-dimensional contingency table and look at precipitation again. Are the days of the week and the month independent?
+
+
+```{r}
+rice |> 
+  group_by( Month, Weekday ) |> 
+  summarize( numRain = sum( Precipitation > 0 ) ) |>
+  filter( numRain > 0 ) -> df
+summary( df )
+```
+
+For this one we can create a 2-dimensional matrix and pass it to the test function.
+
+```{r}
+df |>
+  select( -numRain ) |>
+  table() |> 
+  chisq.test()
+```
+

@@ -1,0 +1,177 @@
+---
+title: "Vectors & Data Frames In Class Activities"
+author: "Key"
+output: html
+---
+
+## Vectors & Data Frames
+
+Vectors and data frames are the foundation of data analysis in R.  Essentially, most everything we work with will be contained within one of these container types.  As such, it is important for us to get a good understanding and gain a high level of comfort and understanding of how to access and set data in these structures. 
+
+In this and most of the following homework and presentations, I will use the generic term "data frame"  to indicate a suite of data that has several records and individual measurements on each record.  
+
+
+### Creating 
+
+In the chunk below, create three vectors of data: one for for names, one for age, and another for grade.  name them appropriately.
+
+```{r}
+# vectors of different types
+
+names <- c("Rodney","Bob","Alice")
+age <- c(29, 39, 49)
+grade <- c("C", "B", "B+")
+
+```
+
+Now, create a `data.frame` from these vectors.
+
+```{r}
+# data frame
+data.frame( names,age,grade) -> df
+df
+```
+
+
+Add a new column of data to this data frame (you can make it up, which is what I did with the data above...). 
+
+```{r}
+## Add new column
+
+df$color <- c("red","green","blue")
+df
+
+```
+
+
+Add a new row of data to the `data.frame`. 
+
+```{r}
+## Add new row
+
+rbind( df, 
+       data.frame( names="Richard", age=27, grade="A", color="magenta" ) ) -> df
+df
+
+       
+```
+
+
+Summarize your data frame.
+
+```{r}
+## summary of the whole data frame.
+summary( df )
+```
+
+
+
+
+### Manipulating Data
+
+In reality, we spend very little time working with data as small as this, so let's jump into a slightly larger data set.  There is a built-in data set measuring air quality in New York entitled `airquality` (I know, tricky right?).  It is available on every stock installation and this is what it looks like.
+
+```{r}
+summary( airquality )
+```
+
+Let's make a copy of these built-in data (**because if we do not make a copy, you will contaminate the one in memory and we'll have to restart R to get the original one back.**) and turn it into a tibble.  
+
+```{r}
+data <- airquality 
+summary( data  )
+```
+
+
+
+
+Manipulate the data frame in the following ways:  
+
+1. These data were collected in 1973.  Create a new column of data that represents a textual version of the date (month, day, and year) then drop (delete) the columns Month and Day. 
+
+```{r}
+## New Column for compound dates
+
+data$Date <- paste( data$Month, data$Day, "1973", sep="-")
+data$Month <- NULL
+data$Day <- NULL
+
+# show it
+head(data)
+```
+
+
+2. Convert the temperature from F to C.
+
+```{r}
+# Convert F -> C 
+data$Temp <- (data$Temp - 32) * 5 / 9 
+head(data)
+```
+
+
+3. Change the name of the `Temp` column to `Temperature °C` and the `Solar.R` to `Solar Radiation` in an attempt to practice what is known as '[Literate Programming](http://www.literateprogramming.com)'.
+
+
+```{r}
+# set proper names for columns 
+names(data)[4] = "Temperature °C"
+names(data)[2] = "Solar Radiation"
+names(data)
+```
+
+And show your creation by using `head()` to reveal the first 6 rows.
+
+```{r}
+### Show the first few rows
+head( data )
+```
+
+
+## Extracting Data Questions
+
+OK, now we have some data to work with, use that data frame to extract the following information and answer the following questions.
+
+
+1. What were the hottest and coldest dates recorded in this data set?   
+
+```{r}
+hottest <- max(data$`Temperature °C`)
+coolest <- min( data$`Temperature °C` )
+hotDay <- data$Date[ data$`Temperature °C` == hottest ]
+coolDay <- data$Date[ data$`Temperature °C` == coolest ]
+```
+
+*The day with the highest temperature was `r hotDay` when it was `r hottest` °C whereas the coolest day was `r coolest` °C that on `r coolDay`.*
+
+
+2. How many of the days in the data recorded higher than the average wind speed? 
+
+```{r}
+meanWind <- mean( data$Wind)
+daysAbove <- nrow( data$Wind > meanWind )
+```
+
+*There were `r daysAbove` days of wind greater than the average of `r meanWind`.*
+
+3. How many rows of data are there with no missing values for any of recorded observations?
+
+```{r}
+data[ !is.na(data$Ozone) & 
+        !is.na(data$`Solar Radiation`) &
+        !is.na(data$Wind), ] -> tmp 
+fullrows <- nrow( tmp )
+```
+
+*There are `r fullrows` rows of data in the data set that have no missing data at all.*
+
+4. On what days was the solar radiation greater than 300 Langleys in Central Park?
+
+
+```{r}
+data$Date[ data$`Solar Radiation` > 300] -> daysGreater
+daysGreater <- daysGreater[ !is.na(daysGreater)]
+days <- unique( daysGreater )
+```
+
+*The following days had recorded solar radition in excess of 300 Langleys: `r paste(days,collapse=", ")`.*
