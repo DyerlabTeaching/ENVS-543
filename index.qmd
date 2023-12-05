@@ -72,13 +72,15 @@ Applying statistical models to make biological inferences.
 | Continuous\~f(Categorical)  |                                                                                                                                                        |
 +-----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Continuous\~f(Continuous)   | [Correlation Slides](analyses_continuous_continuous_correlation_slides.html), [Correlation Narrative](analyses_continuous_continuous_correlation.html) |
+|                             |                                                                                                                                                        |
+|                             | [Regression Slides](regression_slides.html), [Regression Narrative](regression.html)                                                                   |
 +-----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Categorical\~f(Continuous)  |                                                                                                                                                        |
+| Categorical\~f(Categorical) |                                                                                                                                                        |
 +-----------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ### GeoSpatial Analyses
 
-Expanding data to include spatially relevent analyses.
+Expanding data to include spatially relevent analyses.\`
 
 | Learning Module           | Assets |
 |---------------------------|--------|
