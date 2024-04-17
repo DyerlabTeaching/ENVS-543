@@ -4,6 +4,9 @@ subtitle: "Different Ways of Gaining Inferences"
 editor: visual
 execute: 
   echo: false
+  message: false
+  warning: false
+  error: false 
 ---
 
 ```{r}

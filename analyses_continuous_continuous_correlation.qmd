@@ -72,6 +72,9 @@ For this topic, I thought I would turn to a bit of a more digestible set of data
 
 ```{r}
 #| message: false
+#| warning: false
+#| error: false 
+#| echo: false 
 beer_url <- "https://raw.githubusercontent.com/dyerlab/ENVS-Lectures/master/data/Beer_Styles.csv"
 beer <- read_csv( beer_url )
 summary( beer )
