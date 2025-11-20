@@ -34,15 +34,26 @@ The purpose of this course is to help you build your data skills and to develop 
 
 The content of this course is built upon the following general Ctudent Learning Objectives (CLO):
 
-1.  **Use R to perform reproducible data analysis workflows across environmental contexts:**
-
+### CLO 1: Use R to perform reproducible data analysis workflows across environmental contexts
 > Students will demonstrate functional fluency in using R and its associated libraries (e.g., Tidyverse, Quarto) for data import, transformation, visualization, and analysis, establishing a generalizable skillset for quantitative inquiry.
+  - *Bloom's Level:* Apply / Analyze
+  - *Reinforces:* Seeing R as a tool for thinking and doing, not just syntax or statistical analysis
+  - *Notes:* This aligns with the practical literacy needed to "think with data" in a coding environment. It emphasizes generalized fluency over memorization or syntax drills.
+ 
 
--   *Bloom's Level:* Apply/Analyze.
--   *Notes:* This aligns with the practical literacy needed to “think with data” in a coding environment. It emphasizes generalized fluency over memorization or syntax drills. Modules like “Data Types & Containers,” “Tidyverse,” “Markdown & Quarto,” and “Graphics that Don’t Suck” all serve this CLO.\
--   *Reinforces:* Students seeing R as a tool for thinking and doing, not just syntax or statistics.
+### CLO 2: Analyze and interpret commonly encountered environmental data and associated analyses using appropriate exploratory and statistical techniques
+> Students will apply foundational exploratory and statistical approaches (e.g., binomial models, contingency tables, regression, spatial summaries) to common ecological, environmental, and evolutionary datasets to support data-driven inference.
+  - *Bloom's Level:* Analyze / Evaluate
+  - *Reinforces:* Judgment in data workflows, including exploratory iteration and critique.
+  - *Notes:* This keeps the emphasis on doing the analysis and interpreting results, not on statistical derivation of model components. It fits the framing: "not a stats class" but "using common tools to make sense of real data." It also creates space for iteration and model refinement, aligning with the "model, visualize, refine" approach.
+ 
 
-2.  **Analyze and interpret common environmental datasets using appropriate exploratory and statistical techniques:** Students will apply foundational exploratory and statistical approaches (e.g., binomial models, contingency tables, regression, spatial summaries) to common ecological, environmental, and evolutionary datasets to support data-driven inference.
+### CLO 3: Communicate data-driven findings using publication-quality scientific writing and visualizations.
+> Students will produce clear, compelling, and reproducible documents that communicate quantitative findings, formatted according to scientific norms and using tools like Quarto and Markdown.
+  - *Bloom's Level:* Create
+  - *Reinforces:* Scientific communication and agile presentation of quantitative and qualitative information in industry-standard formats.
+  - *Notes:* This grounds communication in scientific practice, where students must compose and format their insights clearly and rigorously. It ties tightly into how you assess work ("as if submitting for publication") and emphasizes narrative data fluency, not just procedural results.
+
 
 ## Course Content & Assessment
 
