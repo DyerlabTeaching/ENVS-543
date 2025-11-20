@@ -95,11 +95,11 @@ This course requires that you bring your own laptop or other computing device th
 ## Assignments & Grading Policy
 
 The grade for this course is based upon the totality of the points gained for all assignments, as well as a single large data analysis project that will be due at the end of the semester. This final will account for 10% of your overall grade. Grades will be determined using the normal 10% scale:   
-- A (\>= 90%),\
-- B (\>= 80% & \< 90%),\
-- C (\>= 70% & \< 80%),
-- D (\>= 60% & \< 70%), and
-- F (\< 60%).
+- A (>= 90%),  
+- B (>= 80% & < 90%),  
+- C (>= 70% & < 80%),
+- D (>= 60% & < 70%), and
+- F (< 60%).
 
 All percentages are concrete, and scores will be rounded to the nearest integer; no extra credit will be given.
 
