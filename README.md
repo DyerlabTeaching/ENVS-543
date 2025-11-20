@@ -4,7 +4,7 @@
 
 </p>
 
-# [ENVS 543: Environmental Data Literacy](https://dyerlabteaching.github.io/ENVS543-Fall_2023/index.html) Fall 2023
+# [ENVS 543: Environmental Data Literacy](https://dyerlabteaching.github.io/ENVS543-Fall_2023/index.html) Fall Semesters
 
 > Semester course; 3 lecture hours. 3 credits. Enrollment is restricted to students with graduate standing or those with one course in statistics and permission of insthe insctor. Develop quantitative skills for the visualization, manipulation, analysis, and communication of environmental "big data." This course focuses on spatial environmental data analysis, interpretation, and communication, using real-time data from the Rice Rivers Center and the R statistical analysis environment.
 
