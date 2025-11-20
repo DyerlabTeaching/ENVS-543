@@ -59,24 +59,24 @@ The content of this course is built upon the following general Ctudent Learning 
 
 This course is designed as a sequence of individual, stand-alone modules. Each is self-contained and includes a lecture, slides, a larger narrative document, a video demonstration, and an assessment.
 
-| Deliverable | Details | SLO |
-|----|----|----|
-| Welcome & Logistics | Setting up the logistics for the class, getting R, RStudio, and Quarto installed on each of your machines, and getting a tour of the IDE. | NA |
-| Git, Github, & Markdown | Establish a functional working knowledge of git as a collaborative tool for reproducible research and begin working with Markdown as an output for data analysis. | 2 |
-| Data Types & Containers | Understanding the fundamental data types and containers within R and how to import, work with easily, and export raw data. | 1,2 |
-| Tidyverse | Data manipulation. Like a boss. | 1, 2 |
-| Graphics that DON’T suck | Hello publication quality graphics, using the grammar of graphics approach | 2,3 |
-| AI in Data Analytics | Integrate Artificial Intelligence in the development of code and text. | 2 |
-| Statistical Confidence | Base understanding of statistical inferences and the properties of sampled data | 1,2,4 |
-| Binomial Inferences | Analyses based upon expectations. | 4 |
-| Categorical\~f(Categorical) | Contingency table and categorical count data | 4 |
-| Continuous\~f(Categorical) | Analysis of Variance (or equality of means) | 4 |
-| Continuous\~f(Continuous) | Correlation & Regression approaches | 4 |
-| Categorical\~f(Continuous) | Logistic regression | 4 |
-| Points, Lines, & Polygons | Spatial data in vector format vectors | 3,5 |
-| Raster Data | Continuously distributed spatial data | 3,5 |
-| Spatial Analyses | Performing spatially explicit analyses of point process and habitat. | 3,4 |
-| Raytracing | Higher dimensional visualization of spatial extents. | 3,5 |
+| Deliverable | Details | 
+|----|----|  
+| Welcome & Logistics | Setting up the logistics for the class, getting R, RStudio, and Quarto installed on each of your machines, and getting a tour of the IDE. | 
+| Git, Github, & Markdown | Establish a functional working knowledge of git as a collaborative tool for reproducible research and begin working with Markdown as an output for data analysis. | 
+| Data Types & Containers | Understanding the fundamental data types and containers within R and how to import, work with easily, and export raw data. | 
+| Tidyverse | Data manipulation. Like a boss. | 
+| Graphics that DON’T suck | Hello publication quality graphics, using the grammar of graphics approach | 
+| AI in Data Analytics | Integrate Artificial Intelligence in the development of code and text. | 
+| Statistical Confidence | Base understanding of statistical inferences and the properties of sampled data | 
+| Binomial Inferences | Analyses based upon expectations. | 
+| Categorical\~f(Categorical) | Contingency table and categorical count data | 
+| Continuous\~f(Categorical) | Analysis of Variance (or equality of means) | 
+| Continuous\~f(Continuous) | Correlation & Regression approaches | 
+| Categorical\~f(Continuous) | Logistic regression | 
+| Points, Lines, & Polygons | Spatial data in vector format vectors | 
+| Raster Data | Continuously distributed spatial data | 
+| Spatial Analyses | Performing spatially explicit analyses of point process and habitat. | 
+| Raytracing | Higher dimensional visualization of spatial extents. | 
 
 ## Logistics
 
